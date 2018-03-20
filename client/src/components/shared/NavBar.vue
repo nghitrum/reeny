@@ -1,11 +1,13 @@
 <template>
-  <div id="app">
-    <router-view/>
-  </div>
+  <h1>This is a NavBar</h1>
 </template>
 
 <script>
 export default {
-  name: 'App'
+
 }
 </script>
+
+<style>
+
+</style>
