@@ -8,6 +8,8 @@ const schema = require('./schema/schema')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 
+const cors = require('cors')
+
 const app = express()
 
 // Set up mongolab database
@@ -27,6 +29,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use(
   '/graphql',
+  cors(),
   expressGraphQL({
     graphiql: true,
     schema
