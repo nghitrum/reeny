@@ -1,6 +1,6 @@
 <template>
   <div class="footer">
-    <div class="row">
+    <div class="footer-row">
       <div class="column links-column">
         <div class="links">
           <a href="#">
@@ -104,7 +104,7 @@ a:hover {
 }
 
 /* Clear floats after the columns */
-.row:after {
+.footer-row:after {
   content: '';
   display: table;
   clear: both;
