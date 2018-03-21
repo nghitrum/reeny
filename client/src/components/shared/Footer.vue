@@ -26,13 +26,13 @@
           <p>joel@finnishboy.com</p>
           <div class="icons">
             <a href="#">
-              <i class="big facebook square icon"></i>
+              <i class="fab fa-facebook-square"></i>
             </a>
             <a href="#">
-              <i class="big linkedin icon"></i>
+              <i class="fab fa-linkedin"></i>
             </a>
             <a href="https://github.com/nghitrum/reeny">
-              <i class="big github square icon"></i>
+              <i class="fab fa-github-square"></i>
             </a>
           </div>
         </div>
@@ -50,21 +50,22 @@ export default {
 
 <style scoped>
 h1 {
-  margin: 0 0 20px 0;
+  margin: 0 0 .9em 0;
 }
 
 p {
-  margin: 0 0 20px 0;
+  margin: 0 0 .9em 0;
 }
 
 .links p {
-  margin: 0 0 10px 0;
+  margin: 0 0 .5em 0;
 }
 
 .icons a {
   display: inline-block;
   padding-top: 1%;
   color: white;
+  font-size: 2em;
 }
 
 .links-column {
