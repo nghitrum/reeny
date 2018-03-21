@@ -114,5 +114,8 @@ a:hover {
   .column {
     width: 100%;
   }
+  .links {
+    text-align: center;
+  }
 }
 </style>
