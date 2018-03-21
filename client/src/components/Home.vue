@@ -1,9 +1,12 @@
 <template>
-  <div>
+  <div class="wrapper">
     <vue-navbar></vue-navbar>
-    <h1>Hello World</h1>
-    <p>{{msg}}</p>
-    <vue-test></vue-test>
+
+    <div class="content">
+      <h1>Hello World</h1>
+      <p>{{msg}}</p>
+      <vue-test></vue-test>
+    </div>
     <vue-footer></vue-footer>
   </div>
 </template>

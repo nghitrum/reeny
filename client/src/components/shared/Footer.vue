@@ -1,5 +1,7 @@
 <template>
-  <h1>This is a Footer</h1>
+  <div class="footer">
+    <h1>ok gotta put something in here</h1>
+  </div>
 </template>
 
 <script>
@@ -10,4 +12,11 @@ export default {
 
 <style scoped>
 
+h1 {
+  margin: 0 0 20px 0;
+}
+
+p {
+  margin: 0 0 20px 0;
+}
 </style>

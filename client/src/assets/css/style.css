@@ -1,1 +1,32 @@
 /* This style.css is setting up for global */
+
+
+* {
+  box-sizing: border-box;
+}
+
+#app {
+	height: 100%;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.content {
+  flex: 1 0 auto;
+  /* Prevent Chrome, Opera, and Safari from letting these items shrink to smaller than their content's default minimum size. */
+}
+
+.footer {
+  flex-shrink: 0;
+  /* Prevent Chrome, Opera, and Safari from letting these items shrink to smaller than their content's default minimum size. */
+  padding: 10px;
+  background: #1b1c1d;
+  color: white;
+  text-align: center;
+  margin-top: 70px;
+  border-top: 1px solid gray;
+}
