@@ -23,10 +23,10 @@
 .footer {
   flex-shrink: 0;
   /* Prevent Chrome, Opera, and Safari from letting these items shrink to smaller than their content's default minimum size. */
-  padding: 10px;
+  padding: 1%;
   background: #1b1c1d;
   color: white;
   text-align: center;
-  margin-top: 70px;
+  margin-top: 7%;
   border-top: 1px solid gray;
 }

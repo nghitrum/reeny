@@ -1,7 +1,6 @@
 <template>
   <div class="wrapper">
     <vue-navbar></vue-navbar>
-
     <div class="content">
       <h1>Hello World</h1>
       <p>{{msg}}</p>
