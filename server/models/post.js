@@ -20,7 +20,7 @@ const PostSchema = new Schema({
   ],
   rating: {
     type: Number,
-    required : true,
+    required: true,
     default: 0,
     min: 0,
     max: 5
@@ -43,9 +43,12 @@ const PostSchema = new Schema({
 
 PostSchema.statics.plusTag = function(tags) {
   const TagModel = mongoose.model('tag')
-  return TagModel.findById({ _id: tags }).then(tag => {
-    tag.count++
-    return tag.save()
+
+  tags.forEach(element => {
+    return TagModel.findById(element).then(tag => {
+      tag.count++
+      return tag.save()
+    })
   })
 }
 

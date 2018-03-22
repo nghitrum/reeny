@@ -53,14 +53,14 @@ const mutation = new GraphQLObjectType({
           type: GraphQLString
         },
         tags: {
-          type: new GraphQLList(GraphQLString)
+          type: new GraphQLList(GraphQLID)
         },
         rating: {
           type: GraphQLInt
         },
         images: { type: new GraphQLList(GraphQLString) },
         user: {
-          type: GraphQLString
+          type: GraphQLID
         }
       },
       resolve(parentValue, args) {
