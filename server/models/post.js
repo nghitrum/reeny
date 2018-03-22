@@ -4,7 +4,8 @@ const Schema = mongoose.Schema
 const PostSchema = new Schema({
   title: {
     type: String,
-    required: true
+    required: true,
+    trim: true
   },
   content: {
     type: String,
@@ -17,6 +18,13 @@ const PostSchema = new Schema({
       required: true
     }
   ],
+  rating: {
+    type: Number,
+    required : true,
+    default: 0,
+    min: 0,
+    max: 5
+  },
   images: [String],
   user: {
     type: Schema.Types.ObjectId,
@@ -24,6 +32,10 @@ const PostSchema = new Schema({
     required: true
   },
   createdAt: {
+    type: Date,
+    default: Date.now()
+  },
+  updatedAt: {
     type: Date,
     default: Date.now()
   }

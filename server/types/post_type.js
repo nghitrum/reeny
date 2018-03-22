@@ -1,6 +1,12 @@
 const mongoose = require('mongoose')
 const graphql = require('graphql')
-const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLList } = graphql
+const {
+  GraphQLObjectType,
+  GraphQLString,
+  GraphQLID,
+  GraphQLList,
+  GraphQLInt
+} = graphql
 
 const PostModel = mongoose.model('post')
 const UserModel = mongoose.model('user')
@@ -22,6 +28,7 @@ const PostType = new GraphQLObjectType({
         })
       }
     },
+    rating: { type: GraphQLInt },
     images: { type: new GraphQLList(GraphQLString) },
     createdAt: {
       type: GraphQLString

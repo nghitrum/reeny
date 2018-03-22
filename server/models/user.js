@@ -17,6 +17,26 @@ const UserSchema = new Schema({
   password: {
     type: String,
     required: true
+  },
+  birthday: {
+    type: Date
+  },
+  address: {
+    type: String
+  },
+  phone: {
+    type: String
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now()
+  },
+  avatar: {
+    type: String
+  },
+  role: {
+    type: String,
+    default: 'user'
   }
 })
 

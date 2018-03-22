@@ -1,5 +1,11 @@
 const graphql = require('graphql')
-const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLList } = graphql
+const {
+  GraphQLObjectType,
+  GraphQLString,
+  GraphQLID,
+  GraphQLList,
+  GraphQLInt
+} = graphql
 const mongoose = require('mongoose')
 
 const UserModel = mongoose.model('user')
@@ -19,7 +25,8 @@ const mutation = new GraphQLObjectType({
       args: {
         username: { type: GraphQLString },
         email: { type: GraphQLString },
-        password: { type: GraphQLString }
+        password: { type: GraphQLString },
+        address: { type: GraphQLString }
       },
       resolve(parentValue, args) {
         return new UserModel(args).save()
@@ -47,6 +54,9 @@ const mutation = new GraphQLObjectType({
         },
         tags: {
           type: new GraphQLList(GraphQLString)
+        },
+        rating: {
+          type: GraphQLInt
         },
         images: { type: new GraphQLList(GraphQLString) },
         user: {

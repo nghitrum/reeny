@@ -5,11 +5,14 @@ const TagSchema = new Schema({
   name: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
+    lowercase: true,
+    trim: true
   },
   count: {
     type: Number,
-    default: 0
+    default: 0,
+    min: 0
   }
 })
 
