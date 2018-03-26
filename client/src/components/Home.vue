@@ -6,6 +6,8 @@
       <h1>Hello World</h1>
       <p>{{msg}}</p>
       <vue-test></vue-test>
+      <vue-side></vue-side>
+      <vue-post-list></vue-post-list>
     </div>
     <vue-footer></vue-footer>
   </div>
@@ -14,12 +16,14 @@
 <script>
 import NavBar from './shared/NavBar'
 import Footer from './shared/Footer'
+import PostList from './shared/PostList'
 import Test from './Test'
 
 export default {
   components: {
     'vue-navbar': NavBar,
     'vue-footer': Footer,
+    'vue-post-list': PostList,
     'vue-test': Test
   },
   data () {

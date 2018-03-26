@@ -33,6 +33,9 @@ const PostType = new GraphQLObjectType({
     createdAt: {
       type: GraphQLString
     },
+    updatedAt: {
+      type: GraphQLString
+    },
     user: {
       type: UserType,
       resolve(parentValue) {
