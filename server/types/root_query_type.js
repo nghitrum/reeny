@@ -8,6 +8,7 @@ const PostType = require('./post_type')
 
 const UserModel = mongoose.model('user')
 const PostModel = mongoose.model('post')
+const TagModel = mongoose.model('tag')
 
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
@@ -36,6 +37,18 @@ const RootQuery = new GraphQLObjectType({
       args: { id: { type: new GraphQLNonNull(GraphQLID) } },
       resolve(parentValue, { id }) {
         return PostModel.findById(id)
+      }
+    },
+    tags: {
+      type: new GraphQLList(TagType),
+      resolve() {
+        return TagModel.find({})
+      }
+    },
+    tag: {
+      type: TagModel,
+      resolve(parentValue, { id }) {
+        return TagModel.findById(id)
       }
     }
   })
