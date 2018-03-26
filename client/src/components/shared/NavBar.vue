@@ -27,8 +27,8 @@
 </template>
 
 <script>
-import Login from './Login-button'
-import Register from './Register-button'
+import Login from './LoginButton'
+import Register from './RegisterButton'
 
 export default {
   components: {

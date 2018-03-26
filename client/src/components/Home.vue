@@ -6,6 +6,7 @@
       <h1>Hello World</h1>
       <p>{{msg}}</p>
       <vue-test></vue-test>
+      <vue-side></vue-side>
     </div>
     <vue-footer></vue-footer>
   </div>
@@ -14,12 +15,14 @@
 <script>
 import NavBar from './shared/NavBar'
 import Footer from './shared/Footer'
+import Sidearea from './shared/SideArea'
 import Test from './Test'
 
 export default {
   components: {
     'vue-navbar': NavBar,
     'vue-footer': Footer,
+    'vue-side': Sidearea,
     'vue-test': Test
   },
   data () {
