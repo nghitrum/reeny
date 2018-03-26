@@ -46,7 +46,7 @@ const RootQuery = new GraphQLObjectType({
       }
     },
     tag: {
-      type: TagModel,
+      type: TagType,
       resolve(parentValue, { id }) {
         return TagModel.findById(id)
       }
