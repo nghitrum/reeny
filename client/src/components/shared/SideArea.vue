@@ -4,7 +4,6 @@
       <vue-post class="m-3"></vue-post>
     </div>
     <div class="m-3">
-      <p>test</p>
       <tag-cloud></tag-cloud>
     </div>
   </div>
