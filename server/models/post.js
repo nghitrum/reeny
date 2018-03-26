@@ -25,7 +25,7 @@ const PostSchema = new Schema({
     min: 0,
     max: 5
   },
-  updvote: {
+  upVote: {
     type: Number,
     default: 0
   },
