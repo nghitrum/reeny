@@ -100,7 +100,7 @@ export default {
   max-width: 14em;
 }
 .post {
-  border: 1px solid red;
+  /* border: 1px solid red; */
   font-size: 0.9em;
 }
 .post-tag {
