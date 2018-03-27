@@ -29,6 +29,8 @@ const PostType = new GraphQLObjectType({
       }
     },
     rating: { type: GraphQLInt },
+    upVote: { type: GraphQLInt },
+    downVote: { type: GraphQLInt },
     images: { type: new GraphQLList(GraphQLString) },
     createdAt: {
       type: GraphQLString

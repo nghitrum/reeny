@@ -25,6 +25,14 @@ const PostSchema = new Schema({
     min: 0,
     max: 5
   },
+  upVote: {
+    type: Number,
+    default: 0
+  },
+  downVote: {
+    type: Number,
+    default: 0
+  },
   images: [String],
   user: {
     type: Schema.Types.ObjectId,
