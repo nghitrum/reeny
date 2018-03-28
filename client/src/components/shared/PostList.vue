@@ -3,12 +3,16 @@
     <div class="container-fluid post" v-for="post in posts" :key="post.id">
       <div class="row">
 
-        <div class="col-2 col-lg-2">
+        <div class="col-2 col-lg-1">
           <div class="mx-auto-m">
             <div class="rating">
-              <i class="fas fa-long-arrow-alt-up"></i>
+              <a href="#">
+                <i class="fas fa-long-arrow-alt-up"></i>
+              </a>
               <h3>{{post.upVote - post.downVote}}</h3>
-              <i class="fas fa-long-arrow-alt-down"></i>
+              <a href="#">
+                <i class="fas fa-long-arrow-alt-down"></i>
+              </a>
             </div>
           </div>
         </div>
@@ -19,24 +23,39 @@
           </div>
         </div>
 
-        <div class="col-12 col-lg-7 title-column">
+        <div class="col-12 col-lg-8 title-column">
 
           <div class="row">
             <div class="col-12 col-md-8">
-              <a href="#">
+              <router-link :to="{ name: 'Post', params: { postId: post.id }}">
                 <h3>{{post.title}}</h3>
-              </a>
-              <p v-if="post.user">By {{post.user.username}}</p>
+              </router-link>
+              <p v-if="post.user">
+                By <a href="#">{{post.user.username}}</a>
+              </p>
             </div>
             <div class="col-12 col-md-4">
-              <p>{{post.rating}} Stars</p>
+              <div class="stars">
+                <div class="full-stars">
+                  <span v-for="item in (post.rating)" :key="item.id">
+                    <i class="fas fa-star"></i>
+                  </span>
+                </div>
+                <div class="empty-stars">
+                  <span v-for="item in (5 - post.rating)" :key="item.id">
+                    <i class="far fa-star"></i>
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
 
           <div class="row">
             <div class="col-12 col-sm-6">
               <span v-for="tag in post.tags.slice(0, 5)" :key="tag.id">
-                <p class="post-tag">{{tag.name}}</p>
+                <a href="#">
+                  <p class="post-tag">{{tag.name}}</p>
+                </a>
               </span>
             </div>
             <div class="col-12 col-sm-6 time">
@@ -61,6 +80,7 @@ import gql from 'graphql-tag'
 const queryAllPosts = gql`
 query allPosts {
     posts {
+      id
       title
       images
       upVote
@@ -94,8 +114,12 @@ export default {
 </script>
 
 <style scoped>
+a {
+  text-decoration: none;
+  color: black;
+}
 .image-container {
- min-width: 10em;
+  min-width: 10em;
 }
 .image-container img {
   width: 100%;
@@ -120,9 +144,23 @@ export default {
   align-items: center;
 }
 .rating {
-  width:50;
+  width: 50;
   text-align: center;
 }
+.stars {
+  margin-top: .3em;
+}
+.fa-star {
+  font-size: 1.4em;
+}
+.empty-stars,
+.full-stars {
+  display: inline;
+}
+.empty-stars {
+  margin-left: -0.27em;
+}
+
 /* .time {
   text-align: right;
 } */
