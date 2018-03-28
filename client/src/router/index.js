@@ -20,11 +20,11 @@ export default new Router({
       path: '/post',
       name: 'posttest',
       component: post
-    },{
+    },
+    {
       path: '/login',
       name: 'Login',
       component: Login
-
     }
   ]
 })
