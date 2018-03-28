@@ -7,7 +7,7 @@
           <div class="mx-auto-m">
             <div class="rating">
               <i class="fas fa-long-arrow-alt-up"></i>
-              <h3>{{post.rating}}</h3>
+              <h3>{{post.upVote - post.downVote}}</h3>
               <i class="fas fa-long-arrow-alt-down"></i>
             </div>
           </div>
@@ -29,7 +29,7 @@
               <p v-if="post.user">By {{post.user.username}}</p>
             </div>
             <div class="col-12 col-md-4">
-              <p>Stars are supposed to go here</p>
+              <p>{{post.rating}} Stars</p>
             </div>
           </div>
 
@@ -63,6 +63,8 @@ query allPosts {
     posts {
       title
       images
+      upVote
+      downVote
       createdAt
       updatedAt
       rating
