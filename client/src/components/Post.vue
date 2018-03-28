@@ -3,13 +3,18 @@
     <vue-navbar></vue-navbar>
 
     <div class="content">
-      <div class="inner-wrapper">
-        <div class="main-area">
-          <vue-post></vue-post>
-        </div>
-        <div class="sticky-side-area">
-          <vue-side></vue-side>
-        </div>
+        <div class="row">
+          <div class="col-9">
+            <div class="main-area">
+              <vue-post></vue-post>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="sticky-side-area">
+              <vue-side></vue-side>
+            </div>
+          </div>
+
       </div>
     </div>
     <vue-footer></vue-footer>
