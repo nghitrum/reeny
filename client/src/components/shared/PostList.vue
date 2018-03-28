@@ -39,12 +39,12 @@
                 <p class="post-tag">{{tag.name}}</p>
               </span>
             </div>
-            <div class="col-12 col-sm-6">
+            <div class="col-12 col-sm-6 time">
               <div v-if="post.updatedAt">
-                <p>{{post.createdAt}}</p>
+                <p>Posted on {{post.createdAt.slice(0,25)}}</p>
               </div>
               <div v-else>
-                <p>{{post.updatedAt}}</p>
+                <p>Updated on {{post.updatedAt.slice(0,25)}}</p>
               </div>
             </div>
           </div>
@@ -121,6 +121,9 @@ export default {
   width:50;
   text-align: center;
 }
+/* .time {
+  text-align: right;
+} */
 
 @media screen and (max-width: 600px) {
   .image-column {
