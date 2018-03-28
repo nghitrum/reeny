@@ -12,10 +12,25 @@
         <div class="col row-md">
           <h1>{{post.title}}</h1>
         </div>
-        <div class="col">posted by <router-link :to="{ name: 'User', params: { userId: post.user.id }}">{{post.user.username}}</router-link></div>
+        <div class="col">posted by
+          <router-link :to="{ name: 'User', params: { userId: post.user.id }}">{{post.user.username}}</router-link>
+        </div>
       </div>
       <div class="col row-md-6">
-        <div class="col row-md">{{post.rating}} </div>
+        <div class="col row-md">
+          <div class="stars">
+            <div class="full-stars">
+              <span v-for="item in (post.rating)" :key="item.id">
+                <i class="fas fa-star"></i>
+              </span>
+            </div>
+            <div class="empty-stars">
+              <span v-for="item in (5 - post.rating)" :key="item.id">
+                <i class="far fa-star"></i>
+              </span>
+            </div>
+          </div>
+        </div>
         <div class="col row-md">{{post.createdAt}} </div>
       </div>
     </div>
@@ -113,12 +128,11 @@ export default {
 </script>
 
 <style scoped>
-@media only screen
-and (max-width : 400px) {
-img {
-  height: 300px !important;
-  width: 200px !important;
-}
+@media only screen and (max-width: 400px) {
+  img {
+    height: 300px !important;
+    width: 200px !important;
+  }
 }
 img {
   height: 500px !important;
@@ -148,6 +162,19 @@ img {
   background: #e9e8e8;
 }
 
+.stars {
+  margin-top: .6em;
+}
+.fa-star {
+  font-size: 1.4em;
+}
+.empty-stars,
+.full-stars {
+  display: inline;
+}
+.empty-stars {
+  margin-left: -0.27em;
+}
 .rating {
   width: 50;
   text-align: center;
