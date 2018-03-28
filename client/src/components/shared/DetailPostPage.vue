@@ -62,6 +62,7 @@ const id = '5ab8cae715fe2f366c18a3af'
 const queryPost = gql`
   query Post {
     post(id: "${id}") {
+      id
       title
       content
       tags {
@@ -82,6 +83,7 @@ const queryPost = gql`
   }
 `
 export default {
+  props: ["id"],
   components: {
     'b-carousel': bCarousel,
     'b-carousel-slide': bCarouselSlide

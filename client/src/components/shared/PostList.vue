@@ -23,9 +23,7 @@
 
           <div class="row">
             <div class="col-12 col-md-8">
-              <a href="#">
-                <h3>{{post.title}}</h3>
-              </a>
+              <router-link :to="{ name: 'Post', params: { postId: post.id }}"><h3>{{post.title}}</h3></router-link>
               <p v-if="post.user">By {{post.user.username}}</p>
             </div>
             <div class="col-12 col-md-4">
@@ -61,6 +59,7 @@ import gql from 'graphql-tag'
 const queryAllPosts = gql`
 query allPosts {
     posts {
+      id
       title
       images
       upVote
@@ -95,7 +94,7 @@ export default {
 
 <style scoped>
 .image-container {
- min-width: 10em;
+  min-width: 10em;
 }
 .image-container img {
   width: 100%;
@@ -120,7 +119,7 @@ export default {
   align-items: center;
 }
 .rating {
-  width:50;
+  width: 50;
   text-align: center;
 }
 /* .time {
