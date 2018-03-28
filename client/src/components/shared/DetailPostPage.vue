@@ -1,6 +1,6 @@
 <template>
   <div v-if="post" class="container">
-    <div class="row">
+    <div class="row col-md">
       <div class="col-1">
         <div class="rating">
           <i class="fas fa-long-arrow-alt-up"></i>
@@ -8,19 +8,19 @@
           <i class="fas fa-long-arrow-alt-down"></i>
         </div>
       </div>
-      <div class="col-5">
-        <div class="col">
+      <div class="col row-md-5">
+        <div class="col row-md">
           <h1>{{post.title}}</h1>
         </div>
-        <div class="col">posted by {{post.user.username}} </div>
+        <div class="col">posted by <router-link :to="{ name: 'User', params: { userId: post.user.id }}">{{post.user.username}}</router-link></div>
       </div>
-      <div class="col-6">
-        <div class="col">{{post.rating}} </div>
-        <div class="col">{{post.createdAt}} </div>
+      <div class="col row-md-6">
+        <div class="col row-md">{{post.rating}} </div>
+        <div class="col row-md">{{post.createdAt}} </div>
       </div>
     </div>
     <div class="row d-flex justify-content-center">
-      <div class="carousel col-12 col-md-6">
+      <div class="carousel col-12 col-md-10">
 
         <b-carousel id="carousel" class="text-center" controls indicators :interval="4000" v-model="slide" @sliding-start="onSlideStart" @sliding-end="onSlideEnd">
 
@@ -62,6 +62,7 @@ const id = '5ab8cae715fe2f366c18a3af'
 const queryPost = gql`
   query Post {
     post(id: "${id}") {
+      id
       title
       content
       tags {
@@ -82,6 +83,7 @@ const queryPost = gql`
   }
 `
 export default {
+  props: ['id'],
   components: {
     'b-carousel': bCarousel,
     'b-carousel-slide': bCarouselSlide
@@ -111,6 +113,13 @@ export default {
 </script>
 
 <style scoped>
+@media only screen
+and (max-width : 400px) {
+img {
+  height: 300px !important;
+  width: 200px !important;
+}
+}
 img {
   height: 500px !important;
   width: auto !important;
