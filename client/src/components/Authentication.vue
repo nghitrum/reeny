@@ -3,7 +3,7 @@
     <vue-navbar></vue-navbar>
 
     <div class="content">
-
+      <vue-authentication-form></vue-authentication-form>
     </div>
     <vue-footer></vue-footer>
   </div>
@@ -12,11 +12,13 @@
 <script>
 import NavBar from './shared/NavBar'
 import Footer from './shared/Footer'
+import AuthenticationForm from './authentication/AuthenticationForm'
 
 export default {
   components: {
     'vue-navbar': NavBar,
-    'vue-footer': Footer
+    'vue-footer': Footer,
+    'vue-authentication-form': AuthenticationForm
   },
   data () {
     return {

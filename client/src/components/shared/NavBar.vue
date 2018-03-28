@@ -16,8 +16,22 @@
         <ul class="nav navbar-nav navbar-right">
           <li>
             <div class="btn-group mr-2" role="group">
-              <vue-login></vue-login>
-              <vue-register></vue-register>
+              <div v-if="!user">
+                <button type="button" class="btn btn-secondary" @click="signUp">Sign In</button>
+              </div>
+              <div v-else>
+                <div class="dropdown show">
+                  <div class="btn-group">
+                    Hello&nbsp;
+                    <a href="" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <strong>{{ user.username }}</strong>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                      <button class="dropdown-item" type="button" @click="logout">Logout</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </li>
         </ul>
@@ -27,13 +41,23 @@
 </template>
 
 <script>
-import Login from './LoginButton'
-import Register from './RegisterButton'
+import { USER_TOKEN } from '@/constants/setting'
 
 export default {
-  components: {
-    'vue-login': Login,
-    'vue-register': Register
+  data () {
+    return {
+      user: JSON.parse(localStorage.getItem(USER_TOKEN))
+    }
+  },
+  methods: {
+    logout () {
+      this.user = null
+      localStorage.removeItem(USER_TOKEN)
+      this.$router.replace('/')
+    },
+    signUp () {
+      this.$router.replace('/authentication')
+    }
   }
 
 }
