@@ -5,7 +5,7 @@
     <div class="content">
       <div class="inner-wrapper">
         <div class="main-area">
-          <vue-test></vue-test>
+          <!-- <vue-test></vue-test> -->
           <vue-post-list></vue-post-list>
         </div>
         <div class="sticky-side-area">
