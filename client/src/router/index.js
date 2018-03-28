@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
-import Post from '@/components/shared/DetailPostPage'
+import Post from '@/components/Post'
 
 import Authentication from '@/components/Authentication'
 // import Register from '@/components/Register'
@@ -22,7 +22,7 @@ export default new Router({
       component: Authentication
     },
     {
-      path: '/post/:postId',
+      path: '/Post/:postId',
       name: 'Post',
       component: Post,
       props: true
