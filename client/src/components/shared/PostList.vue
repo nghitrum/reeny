@@ -1,7 +1,7 @@
 <template>
   <div class="post-area" v-if="posts">
-    <div class="container-fluid post" v-for="post in posts" :key="post.id">
-      <div class="row">
+    <div class="container-fluid" v-for="post in posts" :key="post.id">
+      <div class="row post">
 
         <div class="col-2 col-lg-1">
           <div class="mx-auto-m">
@@ -128,6 +128,7 @@ a {
 .post {
   /* border: 1px solid red; */
   font-size: 0.9em;
+  margin-top: 1.2em;
 }
 .post-tag {
   display: inline-block;
