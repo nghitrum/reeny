@@ -6,6 +6,7 @@ const expressGraphQL = require('express-graphql')
 const schema = require('./schema/schema')
 
 const mongoose = require('mongoose')
+mongoose.Promise = global.Promise
 const bodyParser = require('body-parser')
 
 const cors = require('cors')
