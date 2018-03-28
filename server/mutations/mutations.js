@@ -6,6 +6,7 @@ const {
   GraphQLList,
   GraphQLInt
 } = graphql
+
 const mongoose = require('mongoose')
 
 const UserModel = mongoose.model('user')
@@ -66,6 +67,34 @@ const mutation = new GraphQLObjectType({
       resolve(parentValue, args) {
         PostModel.plusTag(args.tags)
         return new PostModel(args).save()
+      }
+    },
+    login: {
+      type: UserType,
+      args: {
+        username: {
+          type: GraphQLString
+        },
+        password: {
+          type: GraphQLString
+        }
+      },
+      resolve(parentValue, args) {
+        return UserModel.findOne({ username: args.username }, function(
+          err,
+          user
+        ) {
+          if (err) throw err
+
+          // test a matching password
+          // const check = user.comparePassword(args.password, function(
+          //   err,
+          //   isMatch
+          // ) {
+          //   if (err) throw err
+          //   console.log('Password:', isMatch) // -> Password123: true
+          // })
+        })
       }
     }
   }
