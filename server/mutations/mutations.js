@@ -18,6 +18,11 @@ const TagType = require('./../types/tag_type')
 const PostModel = mongoose.model('post')
 const PostType = require('./../types/post_type')
 
+const CommentModel = mongoose.model('comment')
+const CommentType = require('./../types/comment_type')
+
+const err = require('./../constants/error')
+
 const mutation = new GraphQLObjectType({
   name: 'Mutation',
   fields: {
@@ -30,6 +35,14 @@ const mutation = new GraphQLObjectType({
         address: { type: GraphQLString }
       },
       resolve(parentValue, args) {
+        let user = UserModel.findOne({ username: args.username })
+        if (!user) {
+          return new Error(2)
+        }
+        user = UserModel.findOne({ email: args.email })
+        if (!user) {
+          return new Error(3)
+        }
         return new UserModel(args).save()
       }
     },
@@ -97,6 +110,23 @@ const mutation = new GraphQLObjectType({
         return PostModel.downVote(args)
       }
     },
+    addComment: {
+      type: PostType,
+      args: {
+        content: {
+          type: GraphQLString
+        },
+        user: {
+          type: GraphQLID
+        },
+        post: {
+          type: GraphQLID
+        }
+      },
+      resolve(parentValue, args) {
+        return new CommentModel(args).save()
+      }
+    },
     login: {
       type: UserType,
       args: {
@@ -107,22 +137,18 @@ const mutation = new GraphQLObjectType({
           type: GraphQLString
         }
       },
-      resolve(parentValue, args) {
-        return UserModel.findOne({ username: args.username }, function(
-          err,
-          user
-        ) {
-          if (err) throw err
+      async resolve(parentValue, args) {
+        const user = await UserModel.findOne({ username: args.username })
+        if (!user) {
+          return new Error(0)
+        }
 
-          // test a matching password
-          // const check = user.comparePassword(args.password, function(
-          //   err,
-          //   isMatch
-          // ) {
-          //   if (err) throw err
-          //   console.log('Password:', isMatch) // -> Password123: true
-          // })
-        })
+        const check = await user.comparePassword(args.password)
+
+        if (!check) {
+          return new Error(1)
+        }
+        return user
       }
     }
   }

@@ -1,0 +1,7 @@
+const WRONG_PASSWORD_CODE = 0
+const NOT_FOUND_USER = 1
+
+module.exports = {
+  WRONG_PASSWORD_CODE,
+  NOT_FOUND_USER
+}

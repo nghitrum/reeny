@@ -4,7 +4,7 @@ import Home from '@/components/Home'
 import Post from '@/components/Post'
 
 import Authentication from '@/components/Authentication'
-// import Register from '@/components/Register'
+import NewPost from '@/components/NewPost'
 
 Vue.use(Router)
 
@@ -22,10 +22,15 @@ export default new Router({
       component: Authentication
     },
     {
-      path: '/Post/:postId',
+      path: '/post/:postId',
       name: 'Post',
       component: Post,
       props: true
+    },
+    {
+      path: '/posts/new',
+      name: 'New Post',
+      component: NewPost
     }
   ]
 })
