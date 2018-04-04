@@ -42,14 +42,8 @@ export default {
 			mutation: postDownVote
 		})
 	}
-},
-apollo: {
-	// fetch all users
-	posts: {
-		query: queryAllPosts
-	}
 }
-}
+
 </script>
 
 <style scoped>
