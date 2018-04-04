@@ -18,6 +18,9 @@ const TagType = require('./../types/tag_type')
 const PostModel = mongoose.model('post')
 const PostType = require('./../types/post_type')
 
+const CommentModel = mongoose.model('comment')
+const CommentType = require('./../types/comment_type')
+
 const err = require('./../constants/error')
 
 const mutation = new GraphQLObjectType({
@@ -91,6 +94,9 @@ const mutation = new GraphQLObjectType({
         post: {
           type: GraphQLID
         }
+      },
+      resolve(parentValue, args) {
+        return new CommentModel(args).save()
       }
     },
     login: {
