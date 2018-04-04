@@ -1,3 +1,4 @@
+const apolloUploadExpress = require('apollo-upload-server')
 //  register models
 require('./models/db')
 
@@ -9,7 +10,13 @@ const mongoose = require('mongoose')
 mongoose.Promise = global.Promise
 const bodyParser = require('body-parser')
 
+const path = require('path')
+const http = require('http')
+
 const cors = require('cors')
+
+//  API
+const api = require('./routes/api')
 
 const app = express()
 
@@ -28,9 +35,13 @@ mongoose.connection
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
+//  API location
+app.use('/api', cors(), api)
+
 app.use(
   '/graphql',
   cors(),
+  apolloUploadExpress.apolloUploadExpress({ uploadDir: './upload' }),
   expressGraphQL({
     graphiql: true,
     schema

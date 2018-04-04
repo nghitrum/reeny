@@ -4,7 +4,10 @@ const {
   GraphQLString,
   GraphQLID,
   GraphQLList,
-  GraphQLInt
+  GraphQLInt,
+  GraphQLBoolean,
+  GraphQLNonNull,
+  GraphQLScalarType
 } = graphql
 
 const mongoose = require('mongoose')
@@ -17,6 +20,8 @@ const TagType = require('./../types/tag_type')
 
 const PostModel = mongoose.model('post')
 const PostType = require('./../types/post_type')
+
+const UploadType = require('./../types/upload_type')
 
 const err = require('./../constants/error')
 
