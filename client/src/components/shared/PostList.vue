@@ -5,15 +5,11 @@
 
         <div class="col-2 col-lg-1">
           <div class="mx-auto-m">
-            <div class="rating">
-              <a href="#">
-                <i class="fas fa-long-arrow-alt-up"></i>
-              </a>
-              <h3>{{post.upVote - post.downVote}}</h3>
-              <a href="#">
-                <i class="fas fa-long-arrow-alt-down"></i>
-              </a>
-            </div>
+            <vue-voting
+             :id="post.id"
+             :inputUpVote="post.upVote"
+             :inputDownVote="post.downVote"
+             ></vue-voting>
           </div>
         </div>
 
@@ -31,7 +27,8 @@
                 <h3>{{post.title}}</h3>
               </router-link>
               <p v-if="post.user">
-                By <a href="#">{{post.user.username}}</a>
+                By
+                <a href="#">{{post.user.username}}</a>
               </p>
             </div>
             <div class="col-12 col-md-4">
@@ -76,6 +73,7 @@
 </template>
 
 <script>
+import Voting from './Voting'
 import gql from 'graphql-tag'
 const queryAllPosts = gql`
 query allPosts {
@@ -103,6 +101,9 @@ export default {
     return {
       posts: []
     }
+  },
+  components: {
+    'vue-voting': Voting
   },
   apollo: {
     // fetch all users
@@ -149,7 +150,7 @@ a {
   text-align: center;
 }
 .stars {
-  margin-top: .3em;
+  margin-top: 0.3em;
 }
 .fa-star {
   font-size: 1.4em;
