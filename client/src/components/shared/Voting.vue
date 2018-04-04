@@ -1,28 +1,26 @@
 <template>
 	<div class="rating">
-		<i class="fas fa-long-arrow-alt-up" @click="plusVote"></i>
+		<i class="fas fa-long-arrow-alt-up" @click="upVote"></i>
 		<h3>{{post.upVote - post.downVote}}</h3>
-		<i class="fas fa-long-arrow-alt-down" @click="minusVote"></i>
+		<i class="fas fa-long-arrow-alt-down" @click="downVote"></i>
 	</div>
 </template>
 
 <script>
 import gql from 'graphql-tag'
-const queryAllPosts = gql`
-query allPosts {
-    posts {
-      id
+
+const upVoteMutation = gql`
+  mutation upVoteMutation($username: String, $password: String) {
+    postUpVote(post: post.id) {
       upVote
-      downVote
     }
   }
 `
-const mutation = gql`
+
+const downVoteMutation = gql`
   mutation downVoteMutation($username: String, $password: String) {
-    login(username: $username, password: $password) {
-      id
-      email
-      username
+    postDownVote(post: post.id) {
+      downVote
     }
   }
 `
@@ -33,19 +31,24 @@ export default {
 		}
 	},
 	methods: {
-		plusVote () {
-			
-		},
-		minusVote () {
-
+		upVote () {
+			this.apollo.mutate({
+				mutation: postDownVote
+			})
 		}
 	},
-	apollo: {
-		// fetch all users
-		posts: {
-			query: queryAllPosts
-		}
+	downVote () {
+		this.apollo.mutate({
+			mutation: postDownVote
+		})
 	}
+},
+apollo: {
+	// fetch all users
+	posts: {
+		query: queryAllPosts
+	}
+}
 }
 </script>
 
