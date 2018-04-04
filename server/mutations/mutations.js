@@ -79,6 +79,20 @@ const mutation = new GraphQLObjectType({
         return new PostModel(args).save()
       }
     },
+    addComment: {
+      type: PostType,
+      args: {
+        content: {
+          type: GraphQLString
+        },
+        user: {
+          type: GraphQLID
+        },
+        post: {
+          type: GraphQLID
+        }
+      }
+    },
     login: {
       type: UserType,
       args: {
