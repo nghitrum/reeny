@@ -145,7 +145,7 @@ a {
   align-items: center;
 }
 .rating {
-  width: 50;
+  width: 50%;
   text-align: center;
 }
 .stars {
