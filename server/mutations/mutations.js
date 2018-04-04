@@ -22,6 +22,8 @@ const PostModel = mongoose.model('post')
 const PostType = require('./../types/post_type')
 
 const UploadType = require('./../types/upload_type')
+const CommentModel = mongoose.model('comment')
+const CommentType = require('./../types/comment_type')
 
 const err = require('./../constants/error')
 
@@ -82,6 +84,51 @@ const mutation = new GraphQLObjectType({
       resolve(parentValue, args) {
         PostModel.plusTag(args.tags)
         return new PostModel(args).save()
+      }
+    },
+    postUpVote: {
+      type: PostType,
+      args: {
+        post: {
+          type: GraphQLID
+        }
+        // user: {
+        //  type:
+        // }
+      },
+      resolve(parentValue, args) {
+        return PostModel.upVote(args)
+      }
+    },
+    postDownVote: {
+      type: PostType,
+      args: {
+        post: {
+          type: GraphQLID
+        }
+        // user: {
+        //  type:
+        // }
+      },
+      resolve(parentValue, args) {
+        return PostModel.downVote(args)
+      }
+    },
+    addComment: {
+      type: PostType,
+      args: {
+        content: {
+          type: GraphQLString
+        },
+        user: {
+          type: GraphQLID
+        },
+        post: {
+          type: GraphQLID
+        }
+      },
+      resolve(parentValue, args) {
+        return new CommentModel(args).save()
       }
     },
     login: {

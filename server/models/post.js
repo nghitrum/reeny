@@ -49,6 +49,22 @@ const PostSchema = new Schema({
   }
 })
 
+PostSchema.statics.upVote = function (args) {
+  const PostModel = mongoose.model('post')
+  return PostModel.findById(args.post).then(post => {
+    ++post.upVote
+    return post.save()
+  })
+}
+
+PostSchema.statics.downVote = function (args) {
+  const PostModel = mongoose.model('post')
+  return PostModel.findById(args.post).then(post => {
+    ++post.downVote
+    return post.save()
+  })
+}
+
 PostSchema.statics.plusTag = function(tags) {
   const TagModel = mongoose.model('tag')
 
