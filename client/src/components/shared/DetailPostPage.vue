@@ -31,7 +31,7 @@
             </div>
           </div>
         </div>
-        <div class="col row-md">{{post.createdAt}} </div>
+        <div class="col row-md">{{post.createdAt.slice(0,25)}} </div>
       </div>
     </div>
     <div class="row d-flex justify-content-center">
@@ -56,15 +56,40 @@
 
       </div>
     </div>
-    <div class="row">
+    <div class="row container">
       <p>{{post.content}}
         <p/>
     </div>
-    <div class="row">
+    <div class="row container">
       <span v-for="tag in post.tags.slice(0, 5)" :key="tag.id">
-        <p class="post-tag">{{tag.name}}</p>
+        <p class="post-tag ">{{tag.name}}</p>
       </span>
 
+    </div>
+    <div class="row mt-3">
+      <div class="row m-2 comment border border-primary rounded" v-for="comment in comments" :key="comment.id">
+        <div class="col-1">
+          <div class="rating">
+            <i class="fas fa-long-arrow-alt-up"></i>
+            <h3>{{post.upVote - post.downVote}} </h3>
+            <i class="fas fa-long-arrow-alt-down"></i>
+          </div>
+        </div>
+        <div class="col-11">
+          <div class="row align-items-start">
+            <div class="col">{{comment.content}}</div>
+          </div>
+
+          <div class="row justify-content-between mt-3">
+            <div class="col-6">
+              Posted by {{comment.user.username}}
+            </div>
+            <div class="col-6 text-right">
+              {{comment.createdAt.slice(0,25)}}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -97,6 +122,22 @@ const queryPost = gql`
     }
   }
 `
+const queryComments = gql`
+  query Comments {
+    comments(post: "${id}") {
+      id
+      content
+      upVote
+      downVote
+      createdAt
+      user {
+        id
+        username
+      }
+    }
+  }
+`
+
 export default {
   props: ['id'],
   components: {
@@ -106,6 +147,7 @@ export default {
   data () {
     return {
       post: '',
+      comments: '',
       slide: 0,
       sliding: null
     }
@@ -114,6 +156,9 @@ export default {
     // fetch all users
     post: {
       query: queryPost
+    },
+    comments: {
+      query: queryComments
     }
   },
   methods: {
@@ -163,7 +208,7 @@ img {
 }
 
 .stars {
-  margin-top: .6em;
+  margin-top: 0.6em;
 }
 .fa-star {
   font-size: 1.4em;
@@ -176,7 +221,10 @@ img {
   margin-left: -0.27em;
 }
 .rating {
-  width: 50;
+  width: 50%;
   text-align: center;
+}
+.comment {
+  width: 65em
 }
 </style>
