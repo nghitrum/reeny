@@ -1,19 +1,22 @@
 <template>
   <div>
     <h1>New Post</h1>
-    <vue-images-uploader v-on:addImages="getImages($event)"></vue-images-uploader>
-    <vue-tags-uploader v-on:addTags="getTags($event)"></vue-tags-uploader>
+    <!-- <vue-images-uploader v-on:addImages="getImages($event)"></vue-images-uploader>
+    <vue-tags-uploader v-on:addTags="getTags($event)"></vue-tags-uploader> -->
+    <vue-rating v-on:addRating="getRating($event)"></vue-rating>
   </div>
 </template>
 
 <script>
 import ImagesUploader from './post/ImagesUploader'
 import TagsUploader from './post/TagsUploader'
+import Rating from './post/Rating'
 
 export default {
   components: {
     'vue-images-uploader': ImagesUploader,
-    'vue-tags-uploader': TagsUploader
+    'vue-tags-uploader': TagsUploader,
+    'vue-rating': Rating
   },
   methods: {
     getTags (tags) {
@@ -23,6 +26,10 @@ export default {
     getImages (images) {
       // console.log(images[0].public_id)
       // TODO: add images[0] to database
+    },
+    getRating (rating) {
+      // console.log(rating)
+      // TODO:
     }
   }
 }
