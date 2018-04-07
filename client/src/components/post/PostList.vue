@@ -5,7 +5,7 @@
 
         <div class="col-2 col-lg-1">
           <div class="mx-auto-m">
-            <vue-voting :id="post.id" :inputUpVote="post.upVote" :inputDownVote="post.downVote"></vue-voting>
+            <vue-post-voting :id="post.id" :inputUpVote="post.upVote" :inputDownVote="post.downVote"></vue-post-voting>
           </div>
         </div>
 
@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import Voting from './Voting'
+import PostVoting from './PostVoting'
 import gql from 'graphql-tag'
 const queryAllPosts = gql`
 query allPosts {
@@ -99,7 +99,7 @@ export default {
     }
   },
   components: {
-    'vue-voting': Voting
+    'vue-post-voting': PostVoting
   },
   apollo: {
     // fetch all users

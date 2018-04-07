@@ -4,7 +4,7 @@ import Home from '@/components/pages/Home'
 import Post from '@/components/pages/Post'
 
 import Authentication from '@/components/pages/Authentication'
-import NewPost from '@/components/pages/NewPost'
+import PostNew from '@/components/pages/PostNew'
 
 Vue.use(Router)
 
@@ -30,7 +30,7 @@ export default new Router({
     {
       path: '/posts/new',
       name: 'New Post',
-      component: NewPost
+      component: PostNew
     }
   ]
 })
