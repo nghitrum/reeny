@@ -1,16 +1,16 @@
 <template>
   <div>
     <h1>New Post</h1>
-    <!-- <vue-images-uploader v-on:addImages="getImages($event)"></vue-images-uploader>
-    <vue-tags-uploader v-on:addTags="getTags($event)"></vue-tags-uploader> -->
+    <vue-images-uploader v-on:addImages="getImages($event)"></vue-images-uploader>
+    <vue-tags-uploader v-on:addTags="getTags($event)"></vue-tags-uploader>
     <vue-rating v-on:addRating="getRating($event)"></vue-rating>
   </div>
 </template>
 
 <script>
-import ImagesUploader from './post/ImagesUploader'
-import TagsUploader from './post/TagsUploader'
-import Rating from './post/Rating'
+import ImagesUploader from '@/components/post/ImagesUploader'
+import TagsUploader from '@/components/post/TagsUploader'
+import Rating from '@/components/post/Rating'
 
 export default {
   components: {

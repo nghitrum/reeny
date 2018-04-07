@@ -21,7 +21,6 @@ const TagType = require('./../types/tag_type')
 const PostModel = mongoose.model('post')
 const PostType = require('./../types/post_type')
 
-const UploadType = require('./../types/upload_type')
 const CommentModel = mongoose.model('comment')
 const CommentType = require('./../types/comment_type')
 

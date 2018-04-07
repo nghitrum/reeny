@@ -2,8 +2,6 @@ var express = require('express')
 var router = express.Router()
 var multer = require('multer')
 var fs = require('fs')
-var mongoose = require('mongoose')
-const ImageModel = mongoose.model('image')
 
 var cloudinary = require('cloudinary')
 
