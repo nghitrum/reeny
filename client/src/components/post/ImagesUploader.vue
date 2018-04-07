@@ -29,6 +29,9 @@ export default {
         formData
       ).then(res => {
         this.images.push(res.data.result)
+
+        this.selectedFile = null
+        this.$emit('addImages', this.images)
       }).catch(err => {
         console.log(err)
       })
