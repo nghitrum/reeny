@@ -62,6 +62,12 @@ const RootQuery = new GraphQLObjectType({
           .limit(number)
       }
     },
+    allTags: {
+      type: new GraphQLList(TagType),
+      resolve() {
+        return TagModel.find({}).sort({ count: 'desc' })
+      }
+    },
     comments: {
       type: new GraphQLList(CommentType),
       args: {
