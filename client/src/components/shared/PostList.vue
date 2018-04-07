@@ -5,11 +5,7 @@
 
         <div class="col-2 col-lg-1">
           <div class="mx-auto-m">
-            <vue-voting
-             :id="post.id"
-             :inputUpVote="post.upVote"
-             :inputDownVote="post.downVote"
-             ></vue-voting>
+            <vue-voting :id="post.id" :inputUpVote="post.upVote" :inputDownVote="post.downVote"></vue-voting>
           </div>
         </div>
 
@@ -34,13 +30,13 @@
             <div class="col-12 col-md-4">
               <div class="stars">
                 <div class="full-stars">
-                  <span v-for="item in (post.rating)" :key="item.id">
+                  <span v-for="item in (post.rating)" :key="item.id" style="color: orange;">
                     <i class="fas fa-star"></i>
                   </span>
                 </div>
                 <div class="empty-stars">
-                  <span v-for="item in (5 - post.rating)" :key="item.id">
-                    <i class="far fa-star"></i>
+                  <span v-for="item in (5 - post.rating)" :key="item.id" style="color: lightgray;">
+                    <i class="fas fa-star"></i>
                   </span>
                 </div>
               </div>
