@@ -90,6 +90,19 @@
           </div>
         </div>
       </div>
+      <div>
+        <div class="container" v-if="user">
+          <form class="form">
+            <div class="form-group">
+              <label for="exampleTextarea">Reply:</label>
+              <div class="form-inline">
+                <textarea class="form-control" id="reply" action="#" method="post" v-model="comment" rows="3"></textarea>
+                <button type="submit" class="btn btn-primary ml-5" @click="addComment" >Submit</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -98,6 +111,8 @@
 import bCarousel from 'bootstrap-vue/es/components/carousel/carousel'
 import bCarouselSlide from 'bootstrap-vue/es/components/carousel/carousel-slide'
 import gql from 'graphql-tag'
+import { USER_TOKEN } from '@/constants/setting'
+
 const id = '5ab8cae715fe2f366c18a3af'
 const queryPost = gql`
   query Post {
@@ -138,6 +153,15 @@ const queryComments = gql`
   }
 `
 
+const commentMutation = gql`
+mutation commentMutation($content: String, $user: ID, $post: ID) {
+  addComment(content: $content, user: $user, post: $post) {
+    content
+    user
+    post
+  }
+}
+`
 export default {
   props: ['id'],
   components: {
@@ -149,7 +173,9 @@ export default {
       post: '',
       comments: '',
       slide: 0,
-      sliding: null
+      sliding: null,
+      comment: '',
+      user: JSON.parse(localStorage.getItem(USER_TOKEN))
     }
   },
   apollo: {
@@ -167,6 +193,16 @@ export default {
     },
     onSlideEnd (slide) {
       this.sliding = false
+    },
+    addComment () {
+      this.$apollo.mutate({
+        mutation: commentMutation,
+        variables: {
+          content: this.comment,
+          user: this.user,
+          post: this.post.id
+        }
+      })
     }
   }
 }
@@ -225,6 +261,9 @@ img {
   text-align: center;
 }
 .comment {
-  width: 65em
+  width: 65em;
+}
+#reply {
+  width: 55em;
 }
 </style>
