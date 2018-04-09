@@ -21,13 +21,13 @@
         <div class="col row-md">
           <div class="stars">
             <div class="full-stars">
-              <span v-for="item in (post.rating)" :key="item.id">
+              <span v-for="item in (post.rating)" :key="item.id" style="color: orange;">
                 <i class="fas fa-star"></i>
               </span>
             </div>
             <div class="empty-stars">
-              <span v-for="item in (5 - post.rating)" :key="item.id">
-                <i class="far fa-star"></i>
+              <span v-for="item in (5 - post.rating)" :key="item.id" style="color: lightgray;">
+                <i class="fas fa-star"></i>
               </span>
             </div>
           </div>
