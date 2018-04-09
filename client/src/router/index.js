@@ -22,7 +22,7 @@ export default new Router({
       component: Authentication
     },
     {
-      path: '/post/:postId',
+      path: '/post/:id',
       name: 'Post',
       component: Post,
       props: true

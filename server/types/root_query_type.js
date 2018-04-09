@@ -71,10 +71,10 @@ const RootQuery = new GraphQLObjectType({
     comments: {
       type: new GraphQLList(CommentType),
       args: {
-        post: { type: new GraphQLNonNull(GraphQLID) }
+        post: { type: GraphQLID }
       },
       resolve(parentValue, { post }) {
-        return CommentModel.find({ post })
+        return CommentModel.find({ post }).sort({ createdAt: 'desc' })
       }
     }
   })

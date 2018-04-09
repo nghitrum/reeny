@@ -8,9 +8,9 @@
 </template>
 
 <script>
-import ImagesUploader from '@/components/post/ImagesUploader'
-import TagsUploader from '@/components/post/TagsUploader'
-import Rating from '@/components/post/Rating'
+import ImagesUploader from '@/components/new-post/ImagesUploader'
+import TagsUploader from '@/components/new-post/TagsUploader'
+import Rating from '@/components/new-post/Rating'
 
 export default {
   components: {
