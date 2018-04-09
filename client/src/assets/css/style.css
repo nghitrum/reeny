@@ -4,6 +4,7 @@
   box-sizing: border-box;
 }
 
+/* flex sticky footer start */
 html,
 body {
   height: 100%;
@@ -43,6 +44,10 @@ body {
 .main-area {
   width: 100%;
 }
+/* flex sticky footer end */
+
+
+/* when screen is smaller put tags on top and remove sticky side area */
 
 @media screen and (max-width: 600px) {
   .inner-wrapper {
@@ -56,5 +61,6 @@ body {
     position: sticky;
     top: 0;
     align-self: flex-start;
+    width: 30%;
   }
 }
