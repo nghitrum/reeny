@@ -31,6 +31,22 @@ const CommentSchema = new Schema({
   }
 })
 
+CommentSchema.statics.upVote = function (args) {
+  const CommentModel = mongoose.model('comment')
+  return CommentModel.findById(args.comment).then(comment => {
+    ++comment.upVote
+    return comment.save()
+  })
+}
+
+CommentSchema.statics.downVote = function (args) {
+  const CommentModel = mongoose.model('comment')
+  return CommentModel.findById(args.comment).then(comment => {
+    ++comment.downVote
+    return comment.save()
+  })
+}
+
 mongoose.model('comment', CommentSchema)
 
 module.exports = CommentSchema
