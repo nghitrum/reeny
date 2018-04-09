@@ -9,8 +9,7 @@
       <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
         <div class="form-inline mr-3">
           <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+            <vue-search></vue-search>
           </form>
         </div>
         <ul class="nav navbar-nav navbar-right">
@@ -42,12 +41,16 @@
 
 <script>
 import { USER_TOKEN } from '@/constants/setting'
+import Search from '@/components/shared/Search'
 
 export default {
   data () {
     return {
       user: JSON.parse(localStorage.getItem(USER_TOKEN))
     }
+  },
+  components: {
+    'vue-search': Search
   },
   methods: {
     logout () {
