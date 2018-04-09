@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="row m-2 comment border border-primary rounded" v-for="comment in tempComments" :key="comment.id">
+  <div class="container">
+    <div class="row my-3 mx-1 comment border border-primary rounded" v-for="comment in tempComments" :key="comment.id">
       <div class="col-1">
         <div class="rating">
           <i class="fas fa-long-arrow-alt-up"></i>

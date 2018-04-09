@@ -19,7 +19,6 @@
 
           <div class="row">
             <div class="col-12 col-md-8">
-              {{post.id}}
               <router-link :to="{ name: 'Post', params: { id: post.id }}">
                 <h3>{{post.title}}</h3>
               </router-link>

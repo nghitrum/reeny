@@ -4,8 +4,8 @@
       <div class="form-group">
         <label for="exampleTextarea">Reply:</label>
         <div class="form-inline">
-          <textarea class="form-control" id="reply" method="post" v-model="comment" cols="110" rows="3" charswidth="23"></textarea>
-          <button type="button" class="btn btn-outline-primary ml-5" @click="addComment">Submit</button>
+          <textarea class="form-control" id="reply" method="post" v-model="comment" cols="120" rows="3" charswidth="23"></textarea>
+          <button type="button" class="btn btn-outline-primary ml-5 align-self-start" @click="addComment">Submit</button>
         </div>
       </div>
     </form>
