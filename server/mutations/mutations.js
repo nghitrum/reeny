@@ -142,7 +142,7 @@ const mutation = new GraphQLObjectType({
       }
     },
     addComment: {
-      type: PostType,
+      type: CommentType,
       args: {
         content: {
           type: GraphQLString
@@ -154,7 +154,7 @@ const mutation = new GraphQLObjectType({
           type: GraphQLID
         }
       },
-      resolve(parentValue, args) {
+      resolve (parentValue, args) {
         return new CommentModel(args).save()
       }
     },
