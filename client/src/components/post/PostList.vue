@@ -82,12 +82,13 @@ query allPosts {
       createdAt
       updatedAt
       rating
-      user {
-        username
-      }
       tags {
         id
         name
+      }
+      user {
+        id
+        username
       }
     }
   }

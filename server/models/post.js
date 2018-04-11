@@ -46,21 +46,51 @@ const PostSchema = new Schema({
   updatedAt: {
     type: Date,
     default: Date.now
-  }
+  },
+  upVotedBy: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'user'
+    }
+  ],
+  downVotedBy: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'user'
+    }
+  ]
 })
 
-PostSchema.statics.upVote = function (args) {
+PostSchema.statics.upVote = function(args) {
   const PostModel = mongoose.model('post')
   return PostModel.findById(args.post).then(post => {
-    ++post.upVote
+    // ++post.upVote
+    post.upVotedBy.push(args.user)
+    post.upVote = post.upVotedBy.length
+
+    var index = post.downVotedBy.indexOf(args.user)
+    if (index > -1) {
+      post.downVotedBy.splice(index, 1)
+      post.downVote = post.downVotedBy.length
+    }
+
     return post.save()
   })
 }
 
-PostSchema.statics.downVote = function (args) {
+PostSchema.statics.downVote = function(args) {
   const PostModel = mongoose.model('post')
   return PostModel.findById(args.post).then(post => {
-    ++post.downVote
+    // ++post.downVote
+    post.downVotedBy.push(args.user)
+    post.downVote = post.downVotedBy.length
+
+    var index = post.upVotedBy.indexOf(args.user)
+    if (index > -1) {
+      post.upVotedBy.splice(index, 1)
+      post.upVote = post.upVotedBy.length
+    }
+
     return post.save()
   })
 }
