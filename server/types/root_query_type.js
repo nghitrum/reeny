@@ -76,6 +76,15 @@ const RootQuery = new GraphQLObjectType({
       resolve(parentValue, { post }) {
         return CommentModel.find({ post }).sort({ createdAt: 'desc' })
       }
+    },
+    comment: {
+      type: CommentType,
+      args: {
+        id: { type: GraphQLID }
+      },
+      resolve(parentValue, { id }) {
+        return CommentModel.findById(id)
+      }
     }
   })
 })
