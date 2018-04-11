@@ -28,21 +28,51 @@ const CommentSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'post',
     required: true
-  }
+  },
+  upVotedBy: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'user'
+    }
+  ],
+  downVotedBy: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'user'
+    }
+  ]
 })
 
-CommentSchema.statics.upVote = function (args) {
+CommentSchema.statics.upVote = function(args) {
   const CommentModel = mongoose.model('comment')
   return CommentModel.findById(args.comment).then(comment => {
-    ++comment.upVote
+    // ++comment.upVote
+    comment.upVotedBy.push(args.user)
+    comment.upVote = comment.upVotedBy.length
+
+    var index = comment.downVotedBy.indexOf(args.user)
+    if (index > -1) {
+      comment.downVotedBy.splice(index, 1)
+      comment.downVote = comment.downVotedBy.length
+    }
+
     return comment.save()
   })
 }
 
-CommentSchema.statics.downVote = function (args) {
+CommentSchema.statics.downVote = function(args) {
   const CommentModel = mongoose.model('comment')
   return CommentModel.findById(args.comment).then(comment => {
-    ++comment.downVote
+    // ++comment.downVote
+    comment.downVotedBy.push(args.user)
+    comment.downVote = comment.downVotedBy.length
+
+    var index = comment.upVotedBy.indexOf(args.user)
+    if (index > -1) {
+      comment.upVotedBy.splice(index, 1)
+      comment.upVote = comment.upVotedBy.length
+    }
+
     return comment.save()
   })
 }

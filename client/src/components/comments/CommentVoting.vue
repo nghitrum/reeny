@@ -12,53 +12,98 @@
 
 <script>
 import gql from 'graphql-tag'
+import { USER_TOKEN } from '@/constants/setting'
 const upVoteMutation = gql`
-mutation upVoteMutation($id: ID) {
-  commentUpVote(comment: $id){
+mutation upVoteMutation($id: ID, $user: ID) {
+  commentUpVote(comment: $id, user: $user){
     upVote
+    downVote
   }
 }
 `
 const downVoteMutation = gql`
-mutation downVoteMutation($id: ID) {
-  commentDownVote(comment: $id){
+mutation downVoteMutation($id: ID, $user: ID) {
+  commentDownVote(comment: $id, user: $user){
+    upVote
     downVote
+  }
+}
+`
+const queryComment = gql`
+query getComment($input: ID!) {
+  comment(id: $input) {
+    id
+    upVotedBy {
+      id
+    }
+    downVotedBy {
+      id
+    }
   }
 }
 `
 export default {
   data () {
     return {
-      commentId: this.id,
       upVoteCount: this.inputUpVote,
-      downVoteCount: this.inputDownVote
+      downVoteCount: this.inputDownVote,
+      user: JSON.parse(localStorage.getItem(USER_TOKEN)),
+      comment: '',
+      downVotePressed: false,
+      upVotePressed: false
+    }
+  },
+  apollo: {
+    comment: {
+      query: queryComment,
+      variables () {
+        return {
+          input: this.id
+        }
+      }
     }
   },
   props: ['id', 'inputUpVote', 'inputDownVote'],
   methods: {
     upVote () {
-      this.$apollo.mutate({
-        mutation: upVoteMutation,
-        variables: {
-          id: this.commentId
+      if (!this.upVotePressed) {
+        if (this.comment.upVotedBy.filter(user => user.id === this.user.id).length === 0 || this.downVotePressed) {
+          this.$apollo.mutate({
+            mutation: upVoteMutation,
+            variables: {
+              id: this.id,
+              user: this.user.id
+            }
+          }).then(res => {
+            this.upVotePressed = true
+            this.downVotePressed = false
+            this.upVoteCount = res.data.commentUpVote.upVote
+            this.downVoteCount = res.data.commentUpVote.downVote
+          }).catch(err => {
+            console.log(err)
+          })
         }
-      }).then(res => {
-        this.upVoteCount++ // = res.data.commentUpVote.upVote
-      }).catch(err => {
-        console.log(err)
-      })
+      }
     },
     downVote () {
-      this.$apollo.mutate({
-        mutation: downVoteMutation,
-        variables: {
-          id: this.commentId
+      if (!this.downVotePressed) {
+        if (this.comment.downVotedBy.filter(user => user.id === this.user.id).length === 0 || this.upVotePressed) {
+          this.$apollo.mutate({
+            mutation: downVoteMutation,
+            variables: {
+              id: this.id,
+              user: this.user.id
+            }
+          }).then(res => {
+            this.upVotePressed = false
+            this.downVotePressed = true
+            this.upVoteCount = res.data.commentDownVote.upVote
+            this.downVoteCount = res.data.commentDownVote.downVote
+          }).catch(err => {
+            console.log(err)
+          })
         }
-      }).then(res => {
-        this.downVoteCount++ // = res.data.commentDownVote.downVote
-      }).catch(err => {
-        console.log(err)
-      })
+      }
     }
   }
 }
