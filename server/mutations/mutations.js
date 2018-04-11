@@ -90,10 +90,10 @@ const mutation = new GraphQLObjectType({
       args: {
         post: {
           type: GraphQLID
+        },
+        user: {
+          type: GraphQLID
         }
-        // user: {
-        //  type:
-        // }
       },
       resolve(parentValue, args) {
         return PostModel.upVote(args)
@@ -104,10 +104,10 @@ const mutation = new GraphQLObjectType({
       args: {
         post: {
           type: GraphQLID
+        },
+        user: {
+          type: GraphQLID
         }
-        // user: {
-        //  type:
-        // }
       },
       resolve(parentValue, args) {
         return PostModel.downVote(args)
@@ -154,7 +154,7 @@ const mutation = new GraphQLObjectType({
           type: GraphQLID
         }
       },
-      resolve (parentValue, args) {
+      resolve(parentValue, args) {
         return new CommentModel(args).save()
       }
     },
