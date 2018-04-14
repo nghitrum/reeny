@@ -49,7 +49,7 @@ const PostSchema = new Schema({
   }
 })
 
-PostSchema.statics.upVote = function (args) {
+PostSchema.statics.upVote = function(args) {
   const PostModel = mongoose.model('post')
   return PostModel.findById(args.post).then(post => {
     ++post.upVote
@@ -57,7 +57,7 @@ PostSchema.statics.upVote = function (args) {
   })
 }
 
-PostSchema.statics.downVote = function (args) {
+PostSchema.statics.downVote = function(args) {
   const PostModel = mongoose.model('post')
   return PostModel.findById(args.post).then(post => {
     ++post.downVote
