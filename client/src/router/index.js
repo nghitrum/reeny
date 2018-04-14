@@ -31,6 +31,10 @@ export default new Router({
       path: '/posts/new',
       name: 'New Post',
       component: PostNew
+    },
+    {
+      path: '/tag/name',
+      name: 'Tag'
     }
   ]
 })

@@ -5,8 +5,8 @@ span {
 </style>
 <template>
   <div>
-    <span v-for="tag in tags" :key="tag.id" v-bind:style="{fontSize: (((tag.count - tags[9].count)*(max - min) / (tags[0].count - tags[9].count )) + min) * 0.5 +'em'}">
-      <router-link :to="{ name: 'User'}">{{tag.name}}</router-link>&nbsp;
+    <span v-for="tag in tags" :key="tag.id" v-bind:style="{fontSize: (((tag.count - tags[(tags.length > max ? max : tags.length - 1)].count)*(max - min) / (tags[0].count - tags[(tags.length > max ? max : tags.length - 1)].count )) + min) * 0.5 +'em'}">
+      <router-link :to="{ name: 'Tag'}">{{tag.name}}</router-link>&nbsp;
     </span>
   </div>
 </template>
@@ -14,13 +14,14 @@ span {
 <script>
 import gql from 'graphql-tag'
 const queryTags = gql`
-  query tags {
-    tags(number:10) {
+query getTags($max: Int) {
+    tags(number: $max) {
       id
       name
       count
     }
   }
+
 `
 
 export default {
@@ -33,8 +34,14 @@ export default {
   },
   apollo: {
     tags: {
-      query: queryTags
+      query: queryTags,
+      variables () {
+        return {
+          max: this.max
+        }
+      }
     }
+
   }
 }
 </script>

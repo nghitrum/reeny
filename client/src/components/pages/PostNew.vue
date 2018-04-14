@@ -133,40 +133,45 @@ export default {
             }
           }
           `
+          axiosArr = []
           this.newTags.forEach(tag => {
+            axiosArr.push(
+              this.$apollo.mutate({
+                mutation: uploadNewTags,
+                variables: {
+                  inputName: tag
+                }
+              }))
+          })
+          axios.all(axiosArr).then(res => {
+            res.forEach(element => {
+              uploadedTags.push(element.data.addTag.id)
+            })
+            // done new tags uploaded
+
+            // now post new
+            const uploadPostMutation = gql`
+            mutation uploadPost($inputTitle: String, $inputContent: String, $inputTags: [ID], $inputRating: Int, $inputImages: [String], $inputUser: ID ) {
+              addPost(title: $inputTitle, content: $inputContent, tags: $inputTags, rating: $inputRating, images: $inputImages, user: $inputUser) {
+                id
+              }
+            }
+            `
             this.$apollo.mutate({
-              mutation: uploadNewTags,
+              mutation: uploadPostMutation,
               variables: {
-                inputName: tag
+                inputTitle: this.title,
+                inputContent: this.content,
+                inputRating: this.rating,
+                inputImages: uploadedImages,
+                inputTags: uploadedTags,
+                inputUser: this.user.id
               }
             }).then(res => {
-              uploadedTags.push(res.data.addTag.id)
+              this.$router.replace('/post/' + res.data.addPost.id)
             }).catch(err => {
               console.log(err)
             })
-          })
-
-          const uploadPostMutation = gql`
-          mutation uploadPost($inputTitle: String, $inputContent: String, $inputTags: [ID], $inputRating: Int, $inputImages: [String], $inputUser: ID ) {
-            addPost(title: $inputTitle, content: $inputContent, tags: $inputTags, rating: $inputRating, images: $inputImages, user: $inputUser) {
-              id
-            }
-          }
-          `
-          this.$apollo.mutate({
-            mutation: uploadPostMutation,
-            variables: {
-              inputTitle: this.title,
-              inputContent: this.content,
-              inputRating: this.rating,
-              inputImages: uploadedImages,
-              inputTags: uploadedTags,
-              inputUser: this.user.id
-            }
-          }).then(res => {
-            this.$router.replace('/post/' + res.data.addPost.id)
-          }).catch(err => {
-            console.log(err)
           })
         })
       }
