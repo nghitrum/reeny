@@ -19,7 +19,7 @@
 
           <div class="row">
             <div class="col-12 col-md-8">
-              <router-link :to="{ name: 'Post', params: { postId: post.id }}">
+              <router-link :to="{ name: 'Post', params: { id: post.id }}">
                 <h3>{{post.title}}</h3>
               </router-link>
               <p v-if="post.user">
@@ -82,12 +82,13 @@ query allPosts {
       createdAt
       updatedAt
       rating
-      user {
-        username
-      }
       tags {
         id
         name
+      }
+      user {
+        id
+        username
       }
     }
   }

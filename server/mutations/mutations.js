@@ -90,10 +90,10 @@ const mutation = new GraphQLObjectType({
       args: {
         post: {
           type: GraphQLID
+        },
+        user: {
+          type: GraphQLID
         }
-        // user: {
-        //  type:
-        // }
       },
       resolve(parentValue, args) {
         return PostModel.upVote(args)
@@ -104,17 +104,45 @@ const mutation = new GraphQLObjectType({
       args: {
         post: {
           type: GraphQLID
+        },
+        user: {
+          type: GraphQLID
         }
-        // user: {
-        //  type:
-        // }
       },
       resolve(parentValue, args) {
         return PostModel.downVote(args)
       }
     },
+    commentUpVote: {
+      type: CommentType,
+      args: {
+        comment: {
+          type: GraphQLID
+        },
+        user: {
+          type: GraphQLID
+        }
+      },
+      resolve(parentValue, args) {
+        return CommentModel.upVote(args)
+      }
+    },
+    commentDownVote: {
+      type: CommentType,
+      args: {
+        comment: {
+          type: GraphQLID
+        },
+        user: {
+          type: GraphQLID
+        }
+      },
+      resolve(parentValue, args) {
+        return CommentModel.downVote(args)
+      }
+    },
     addComment: {
-      type: PostType,
+      type: CommentType,
       args: {
         content: {
           type: GraphQLString
@@ -152,6 +180,24 @@ const mutation = new GraphQLObjectType({
           return new Error(1)
         }
         return user
+      }
+    },
+    search: {
+      type: new GraphQLList(PostType),
+      args: {
+        input: {
+          type: GraphQLString
+        }
+      },
+      async resolve(parentValue, args) {
+        const tag = await TagModel.findOne({ name: args.input })
+        if (tag) {
+          return PostModel.find({ tags: tag.id })
+        } else {
+          return PostModel.find({
+            title: { $regex: args.input, $options: 'i' }
+          })
+        }
       }
     }
   }

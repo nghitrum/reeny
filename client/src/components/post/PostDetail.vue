@@ -2,10 +2,8 @@
   <div v-if="post" class="container">
     <div class="row col-md">
       <div class="col-1">
-        <div class="rating">
-          <i class="fas fa-long-arrow-alt-up"></i>
-          <h3>{{post.upVote - post.downVote}} </h3>
-          <i class="fas fa-long-arrow-alt-down"></i>
+        <div class="mx-auto-m">
+          <vue-post-voting :id="post.id" :inputUpVote="post.upVote" :inputDownVote="post.downVote"></vue-post-voting>
         </div>
       </div>
       <div class="col row-md-5">
@@ -13,7 +11,8 @@
           <h1>{{post.title}}</h1>
         </div>
         <div class="col">posted by
-          <router-link :to="{ name: 'User', params: { userId: post.user.id }}">{{post.user.username}}</router-link>
+          <!-- <router-link :to="{ name: 'User', params: { userId: post.user.id }}">{{post.user.username}}</router-link> -->
+          {{post.user.username}}
         </div>
       </div>
       <div class="col row-md-6">
@@ -67,29 +66,6 @@
 
     </div>
     <div class="row mt-3">
-      <div class="row m-2 comment border border-primary rounded" v-for="comment in comments" :key="comment.id">
-        <div class="col-1">
-          <div class="rating">
-            <i class="fas fa-long-arrow-alt-up"></i>
-            <h3>{{post.upVote - post.downVote}} </h3>
-            <i class="fas fa-long-arrow-alt-down"></i>
-          </div>
-        </div>
-        <div class="col-11">
-          <div class="row align-items-start">
-            <div class="col">{{comment.content}}</div>
-          </div>
-
-          <div class="row justify-content-between mt-3">
-            <div class="col-6">
-              Posted by {{comment.user.username}}
-            </div>
-            <div class="col-6 text-right">
-              {{comment.createdAt.slice(0,25)}}
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -98,67 +74,56 @@
 import bCarousel from 'bootstrap-vue/es/components/carousel/carousel'
 import bCarouselSlide from 'bootstrap-vue/es/components/carousel/carousel-slide'
 import gql from 'graphql-tag'
-const id = '5ab8cae715fe2f366c18a3af'
+import PostVoting from './PostVoting'
+
 const queryPost = gql`
-  query Post {
-    post(id: "${id}") {
+query getPost($input: ID!) {
+  post(id: $input) {
+    id
+    title
+    content
+    tags {
       id
-      title
-      content
-      tags {
-        id
-        name
-        count
-      }
-      rating
-      images
-      upVote
-      downVote
-      createdAt
-      user {
-        id
-        username
-      }
+      name
+      count
     }
-  }
-`
-const queryComments = gql`
-  query Comments {
-    comments(post: "${id}") {
+    user {
       id
-      content
-      upVote
-      downVote
-      createdAt
-      user {
-        id
-        username
-      }
+      username
     }
+    rating
+    images
+    upVote
+    downVote
+    createdAt
+    updatedAt
   }
+}
 `
 
 export default {
   props: ['id'],
   components: {
     'b-carousel': bCarousel,
-    'b-carousel-slide': bCarouselSlide
+    'b-carousel-slide': bCarouselSlide,
+    'vue-post-voting': PostVoting
   },
   data () {
     return {
+      postId: this.id,
       post: '',
-      comments: '',
       slide: 0,
       sliding: null
     }
   },
   apollo: {
-    // fetch all users
     post: {
-      query: queryPost
-    },
-    comments: {
-      query: queryComments
+      query: queryPost,
+      variables () {
+        return {
+          input: this.postId
+        }
+      }
     }
   },
   methods: {
@@ -223,8 +188,5 @@ img {
 .rating {
   width: 50%;
   text-align: center;
-}
-.comment {
-  width: 65em;
 }
 </style>

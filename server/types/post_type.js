@@ -47,6 +47,22 @@ const PostType = new GraphQLObjectType({
             return post.user
           })
       }
+    },
+    upVotedBy: {
+      type: new GraphQLList(UserType),
+      resolve(parentValue) {
+        return UserModel.find({ _id: parentValue.upVotedBy }, (err, res) => {
+          return res
+        })
+      }
+    },
+    downVotedBy: {
+      type: new GraphQLList(UserType),
+      resolve(parentValue) {
+        return UserModel.find({ _id: parentValue.downVotedBy }, (err, res) => {
+          return res
+        })
+      }
     }
   })
 })
