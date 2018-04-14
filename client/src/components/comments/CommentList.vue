@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="row my-3 mx-1 comment border border-primary rounded" v-for="comment in tempComments" :key="comment.id">
+    <div class="row my-3 mx-1 comment border border-primary rounded" v-for="comment in comments" :key="comment.id">
       <div class="col-1">
         <vue-comment-voting :id="comment.id" :inputUpVote="comment.upVote" :inputDownVote="comment.downVote"></vue-comment-voting>
       </div>
@@ -48,7 +48,6 @@ export default {
     return {
       postId: this.id,
       comments: [],
-      tempComments: [],
       comment: this.newComment
     }
   },
@@ -57,7 +56,7 @@ export default {
   },
   watch: {
     newComment () {
-      this.tempComments.unshift(this.newComment)
+      this.$apollo.queries.comments.refetch()
     }
   },
   apollo: {
@@ -67,11 +66,6 @@ export default {
         return {
           id: this.postId
         }
-      },
-      update (data) {
-        data.comments.forEach(com => {
-          this.tempComments.push(com)
-        })
       }
     }
   }
