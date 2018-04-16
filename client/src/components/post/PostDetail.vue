@@ -35,9 +35,7 @@
     </div>
     <div class="row d-flex justify-content-center">
       <div class="carousel col-12 col-md-10">
-
         <b-carousel id="carousel" class="text-center" controls indicators :interval="4000" v-model="slide" @sliding-start="onSlideStart" @sliding-end="onSlideEnd">
-
           <div v-for="image in post.images" :key="image">
             <b-carousel-slide>
               <img slot="img" :src=image>
@@ -52,7 +50,6 @@
             <span class="sr-only">Next</span>
           </a>
         </b-carousel>
-
       </div>
     </div>
     <div class="border rounded my-3 px-4 py-3">
@@ -61,10 +58,7 @@
           <p/>
       </div>
       <div class="row container">
-        <span v-for="tag in post.tags.slice(0, 5)" :key="tag.id">
-          <p class="post-tag ">{{tag.name}}</p>
-        </span>
-
+        <a href="#" class="badge badge-secondary badge-lg mr-1 mt-1" v-for="tag in post.tags.slice(0, 5)" :key="tag.id">{{tag.name}}</a>
       </div>
     </div>
     <div class="row mt-3">

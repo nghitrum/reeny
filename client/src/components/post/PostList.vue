@@ -140,11 +140,6 @@ export default {
 .empty-stars {
   margin-left: -0.25em;
 }
-
-.badge-lg {
-  font-size: 100%;
-  font-weight: 600;
-}
 .title-column {
   display: flex;
   flex-direction: column;
