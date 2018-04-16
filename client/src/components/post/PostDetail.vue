@@ -1,5 +1,5 @@
 <template>
-  <div v-if="post" class="container">
+  <div v-if="post">
     <div class="row justify-content-between col-md rounded border py-3 my-2 ml-1">
       <div class="col-1">
         <div class="mx-auto-m">

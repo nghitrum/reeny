@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <div class="row my-3 mx-1 comment border rounded" v-for="comment in comments" :key="comment.id">
+  <div class="col">
+    <div class="row border rounded mb-3" v-for="comment in comments" :key="comment.id">
       <div class="col-1">
         <vue-comment-voting :id="comment.id" :inputUpVote="comment.upVote" :inputDownVote="comment.downVote"></vue-comment-voting>
       </div>
@@ -8,7 +8,6 @@
         <div class="row align-items-start">
           <div class="col">{{comment.content}}</div>
         </div>
-
         <div class="row justify-content-between mt-3">
           <div class="col-6">
             Posted by {{comment.user.username}}
@@ -73,7 +72,5 @@ export default {
 </script>
 
 <style scoped>
-.comment {
-  width: 65em;
-}
+
 </style>
