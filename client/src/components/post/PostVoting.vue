@@ -1,11 +1,11 @@
 <template>
   <div class="rating">
     <span class="clickable-icon" @click="upVote">
-      <i class="fas fa-long-arrow-alt-up"></i>
+      <i class="fas fa-sort-up"></i>
     </span>
     <h3>{{upVoteCount - downVoteCount}}</h3>
     <span class="clickable-icon" @click="downVote">
-      <i class="fas fa-long-arrow-alt-down"></i>
+      <i class="fas fa-sort-down"></i>
     </span>
   </div>
 </template>
@@ -68,7 +68,12 @@ export default {
   },
   props: ['id', 'inputUpVote', 'inputDownVote'],
   methods: {
+    getNewData () {
+      this.$apollo.queries.post.refetch()
+    },
     upVote () {
+      this.getNewData()
+      console.log('gay')
       if (!this.upVotePressed) {
         if (this.post.upVotedBy.filter(user => user.id === this.user.id).length === 0 || this.downVotePressed) {
           this.$apollo.mutate({
@@ -78,6 +83,7 @@ export default {
               user: this.user.id
             }
           }).then(res => {
+            console.log(res.data)
             this.upVotePressed = true
             this.downVotePressed = false
             this.upVoteCount = res.data.postUpVote.upVote
@@ -89,6 +95,7 @@ export default {
       }
     },
     downVote () {
+      this.getNewData()
       if (!this.downVotePressed) {
         if (this.post.downVotedBy.filter(user => user.id === this.user.id).length === 0 || this.upVotePressed) {
           this.$apollo.mutate({
@@ -114,10 +121,11 @@ export default {
 
 <style scoped>
 .rating {
-  width: 50%;
   text-align: center;
 }
 .clickable-icon {
   cursor: pointer;
+  font-size: 3em;
+  line-height: 0;
 }
 </style>
