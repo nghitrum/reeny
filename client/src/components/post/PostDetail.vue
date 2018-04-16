@@ -58,7 +58,7 @@
           <p/>
       </div>
       <div class="row container">
-        <a href="#" class="badge badge-secondary badge-lg mr-1 mt-1" v-for="tag in post.tags.slice(0, 5)" :key="tag.id">{{tag.name}}</a>
+        <a href="#" class="badge badge-secondary badge-lg mr-1 mt-1" v-for="tag in post.tags" :key="tag.id">{{tag.name}}</a>
       </div>
     </div>
     <div class="row mt-3">
