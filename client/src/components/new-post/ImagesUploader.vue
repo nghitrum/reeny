@@ -1,45 +1,54 @@
 <template>
   <div>
-    <input type="file" @change="onFileSelected">
-    <button @click="onUpload">Upload</button>
-    <div v-for="image in images" v-bind:key="image.public_id">
-      <img :src="image.url" class="img-thumbnail">
+    <div v-for="(image, index) in images" v-bind:key="index">
+      <img :src="image" class="img-thumbnail float-left" :index="index" @click="deleteImage($event)">
     </div>
+    <div class="clear"></div>
+    <input type="file" @change="onFileSelected">
   </div>
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
   data () {
     return {
       selectedFile: null,
-      images: []
+      images: [],
+      files: []
     }
   },
   methods: {
+    deleteImage (event) {
+      let index = event.target.attributes.index.value
+      this.images.splice(index, 1)
+      this.files.splice(index, 1)
+
+      this.$emit('addImages', this.files)
+    },
     onFileSelected (event) {
       this.selectedFile = event.target.files[0]
-    },
-    onUpload () {
-      const formData = new FormData()
-      formData.append('myFile', this.selectedFile, this.selectedFile.name)
-      axios.post('http://localhost:4000/api/upload/image',
-        formData
-      ).then(res => {
-        this.images.push(res.data.result)
+      this.files.push(this.selectedFile)
+      // Show thumbnail instantly
+      var reader = new FileReader()
+      reader.onload = (function (theFile, theList) {
+        return function (e) {
+          theList.push(e.target.result)
+        }
+      })(this.selectedFile, this.images)
 
-        this.selectedFile = null
-        this.$emit('addImages', this.images)
-      }).catch(err => {
-        console.log(err)
-      })
+      reader.readAsDataURL(this.selectedFile)
+      // console.log(this.files)
+      this.$emit('addImages', this.files)
     }
   }
 }
 </script>
 
 <style scoped>
-
+.img-thumbnail {
+  width: 100px;
+}
+.clear {
+  clear: both;
+}
 </style>

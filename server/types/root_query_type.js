@@ -78,6 +78,15 @@ const RootQuery = new GraphQLObjectType({
         return CommentModel.find({ post }).sort({ createdAt: 'desc' })
       }
     },
+    comment: {
+      type: CommentType,
+      args: {
+        id: { type: GraphQLID }
+      },
+      resolve(parentValue, { id }) {
+        return CommentModel.findById(id)
+      }
+    },
     searchPosts: {
       type: new GraphQLList(PostType),
       args: {
@@ -85,8 +94,7 @@ const RootQuery = new GraphQLObjectType({
           type: GraphQLString
         }
       },
-      async resolve (parentValue, args)
-      {
+      async resolve(parentValue, args) {
         const tag = await TagModel.findOne({ name: args.input })
         if (tag) {
           return PostModel.find({ tags: tag.id }).sort({ createdAt: 'desc' })

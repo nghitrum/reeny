@@ -12,8 +12,8 @@
 
 <script>
 import PostDetail from '@/components/post/PostDetail'
-import CommentForm from '@/components/post/CommentForm'
-import CommentList from '@/components/post/CommentList'
+import CommentForm from '@/components/comments/CommentForm'
+import CommentList from '@/components/comments/CommentList'
 
 export default {
   props: ['id'],

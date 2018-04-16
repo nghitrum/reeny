@@ -2,10 +2,8 @@
   <div v-if="post" class="container">
     <div class="row col-md">
       <div class="col-1">
-        <div class="rating">
-          <i class="fas fa-long-arrow-alt-up"></i>
-          <h3>{{post.upVote - post.downVote}} </h3>
-          <i class="fas fa-long-arrow-alt-down"></i>
+        <div class="mx-auto-m">
+          <vue-post-voting :id="post.id" :inputUpVote="post.upVote" :inputDownVote="post.downVote"></vue-post-voting>
         </div>
       </div>
       <div class="col row-md-5">
@@ -76,6 +74,7 @@
 import bCarousel from 'bootstrap-vue/es/components/carousel/carousel'
 import bCarouselSlide from 'bootstrap-vue/es/components/carousel/carousel-slide'
 import gql from 'graphql-tag'
+import PostVoting from './PostVoting'
 
 const queryPost = gql`
 query getPost($input: ID!) {
@@ -106,7 +105,8 @@ export default {
   props: ['id'],
   components: {
     'b-carousel': bCarousel,
-    'b-carousel-slide': bCarouselSlide
+    'b-carousel-slide': bCarouselSlide,
+    'vue-post-voting': PostVoting
   },
   data () {
     return {
