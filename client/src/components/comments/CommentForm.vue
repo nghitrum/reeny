@@ -16,7 +16,7 @@
         </div>
         <div class="row">
           <div class="col">
-            <button type="button" class="btn btn-outline-primary float-right mt-3" @click="addComment">Submit</button>
+            <button type="button" class="btn btn-outline-secondary float-right mt-3" @click="addComment">Submit</button>
           </div>
         </div>
       </div>

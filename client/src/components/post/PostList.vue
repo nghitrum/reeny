@@ -14,7 +14,7 @@
       <div class="col-11 col-sm-8 title-column py-3">
         <div class="title-and-stars">
           <div class="row">
-            <div class="col-12 col-md-7">
+            <div class="col-12 col-md-8">
               <h3 class="post-title">
                 <router-link :to="{ name: 'Post', params: { id: post.id }}">{{post.title}}</router-link>
               </h3>
@@ -23,7 +23,7 @@
                 <a href="#">{{post.user.username}}</a>
               </p>
             </div>
-            <div class="col-12 col-md-5 text-sm-left text-md-right mb-3">
+            <div class="col-12 col-md-4 text-sm-left text-md-right mb-3">
               <div class="stars">
                 <div class="full-stars">
                   <span v-for="item in (post.rating)" :key="item.id" style="color: orange;">
@@ -91,7 +91,7 @@ export default {
 .post-title a {
   text-decoration: none;
   color: black;
-  font-size: 0.8em;
+  font-size: 1em;
   font-weight: 300;
 }
 .post-title a:hover {
