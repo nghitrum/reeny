@@ -20,7 +20,7 @@
           <div class="row">
             <div class="col-12 col-md-8">
               <router-link :to="{ name: 'Post', params: { id: post.id }}">
-                <h3>{{post.title}}</h3>
+                <h3 class="post-title">{{post.title}}</h3>
               </router-link>
               <p v-if="post.user">
                 By
@@ -70,43 +70,22 @@
 
 <script>
 import PostVoting from './PostVoting'
-import gql from 'graphql-tag'
-const queryAllPosts = gql`
-query allPosts {
-    posts {
-      id
-      title
-      images
-      upVote
-      downVote
-      createdAt
-      updatedAt
-      rating
-      user {
-        username
-      }
-      tags {
-        id
-        name
-      }
-    }
-  }
-`
+
 export default {
   data () {
     return {
-      posts: []
+      posts: this.postList
+    }
+  },
+  watch: {
+    postList () {
+      this.posts = this.postList
     }
   },
   components: {
     'vue-post-voting': PostVoting
   },
-  apollo: {
-    // fetch all users
-    posts: {
-      query: queryAllPosts
-    }
-  }
+  props: ['postList']
 }
 </script>
 
@@ -157,6 +136,9 @@ a {
 }
 .empty-stars {
   margin-left: -0.27em;
+}
+.post-title {
+  font-weight: 420;
 }
 
 /* .time {

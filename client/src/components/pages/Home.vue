@@ -1,11 +1,89 @@
 <template>
-  <vue-post-list></vue-post-list>
+  <div>
+    <div v-show="search">
+      <h3 class="search-for pl-5 p-3" v-if="posts.length == 0">No results for &#34;{{search}}&#34;.</h3>
+      <h3 class="search-for pl-5 p-3" v-else>Results for &#34;{{search}}&#34;&#58;</h3>
+    </div>
+    <vue-post-list :postList="posts"></vue-post-list>
+  </div>
+
 </template>
 
 <script>
 import PostList from '@/components/post/PostList'
+import gql from 'graphql-tag'
+
+const queryAllPosts = gql`
+query allPosts {
+    posts {
+      id
+      title
+      images
+      upVote
+      downVote
+      createdAt
+      updatedAt
+      rating
+      user {
+        id
+        username
+      }
+      tags {
+        id
+        name
+      }
+    }
+  }
+`
+
+const querySearch = gql`
+query searchQuery($searchInput: String) {
+  searchPosts(input: $searchInput){
+    id
+    title
+    images
+    upVote
+    downVote
+    createdAt
+    updatedAt
+    rating
+    user {
+      id
+      username
+    }
+    tags {
+      id
+      name
+    }
+  }
+}
+`
 
 export default {
+  props: ['search'],
+  data () {
+    return {
+      posts: [],
+      query: ''
+    }
+  },
+  apollo: {
+    posts: {
+      query () {
+        if (this.search) {
+          return querySearch
+        } else {
+          return queryAllPosts
+        }
+      },
+      update: data => data.searchPosts || data.posts,
+      variables () {
+        return {
+          searchInput: this.search
+        }
+      }
+    }
+  },
   components: {
     'vue-post-list': PostList
   }
@@ -14,5 +92,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+.search-for {
+  font-weight: 440;
+  font-size: 2em;
+}
 </style>

@@ -14,7 +14,8 @@ export default new Router({
     {
       path: '/',
       name: 'Home',
-      component: Home
+      component: Home,
+      props: true
     },
     {
       path: '/authentication',
@@ -31,6 +32,12 @@ export default new Router({
       path: '/posts/new',
       name: 'New Post',
       component: PostNew
+    },
+    {
+      path: '/search=:search',
+      name: 'Search',
+      component: Home,
+      props: true
     }
   ]
 })

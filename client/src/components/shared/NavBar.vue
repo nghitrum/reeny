@@ -8,9 +8,7 @@
 
       <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
         <div class="form-inline mr-3">
-          <form class="form-inline my-2 my-lg-0">
-            <vue-search></vue-search>
-          </form>
+          <vue-search></vue-search>
         </div>
         <ul class="nav navbar-nav navbar-right">
           <li>
@@ -67,6 +65,6 @@ export default {
 </script>
 <style scoped>
 .bg-light {
-  background-color: #f3f0f0!important;
+  background-color: #f3f0f0 !important;
 }
 </style>

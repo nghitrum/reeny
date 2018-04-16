@@ -181,24 +181,6 @@ const mutation = new GraphQLObjectType({
         }
         return user
       }
-    },
-    search: {
-      type: new GraphQLList(PostType),
-      args: {
-        input: {
-          type: GraphQLString
-        }
-      },
-      async resolve(parentValue, args) {
-        const tag = await TagModel.findOne({ name: args.input })
-        if (tag) {
-          return PostModel.find({ tags: tag.id })
-        } else {
-          return PostModel.find({
-            title: { $regex: args.input, $options: 'i' }
-          })
-        }
-      }
     }
   }
 })

@@ -5,7 +5,8 @@ const {
   GraphQLList,
   GraphQLID,
   GraphQLNonNull,
-  GraphQLInt
+  GraphQLInt,
+  GraphQLString
 } = graphql
 
 const TagType = require('./tag_type')
@@ -37,7 +38,7 @@ const RootQuery = new GraphQLObjectType({
     posts: {
       type: new GraphQLList(PostType),
       resolve() {
-        return PostModel.find({})
+        return PostModel.find({}).sort({ createdAt: 'desc' })
       }
     },
     post: {
@@ -75,6 +76,25 @@ const RootQuery = new GraphQLObjectType({
       },
       resolve(parentValue, { post }) {
         return CommentModel.find({ post }).sort({ createdAt: 'desc' })
+      }
+    },
+    searchPosts: {
+      type: new GraphQLList(PostType),
+      args: {
+        input: {
+          type: GraphQLString
+        }
+      },
+      async resolve (parentValue, args)
+      {
+        const tag = await TagModel.findOne({ name: args.input })
+        if (tag) {
+          return PostModel.find({ tags: tag.id }).sort({ createdAt: 'desc' })
+        } else {
+          return PostModel.find({
+            title: { $regex: args.input, $options: 'i' }
+          }).sort({ createdAt: 'desc' })
+        }
       }
     }
   })
