@@ -1,7 +1,7 @@
 <template>
   <div class="post-area" v-if="posts">
     <div class="container-fluid" v-for="post in posts" :key="post.id">
-      <div class="row post">
+      <div class="row post border rounded">
 
         <div class="col-2 col-lg-1">
           <div class="mx-auto-m">

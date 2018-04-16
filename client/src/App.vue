@@ -4,7 +4,9 @@
     <div class="content">
       <div class="inner-wrapper">
         <div class="main-area">
-          <router-view></router-view>
+          <div class="container">
+            <router-view></router-view>
+          </div>
         </div>
         <div class="sticky-side-area">
           <vue-side></vue-side>
