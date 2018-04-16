@@ -2,10 +2,10 @@
   <div class="container" v-if="user">
     <form class="form">
       <div class="form-group">
-        <label for="exampleTextarea">Reply:</label>
+        <label for="exampleTextarea">Post a comment:</label>
         <div class="form-inline">
           <textarea class="form-control" id="reply" method="post" v-model="comment" cols="120" rows="3" charswidth="23"></textarea>
-          <button type="button" class="btn btn-outline-primary ml-5 align-self-start" @click="addComment">Submit</button>
+          <button type="button" class="btn btn-outline-primary ml-5 mt-3 align-self-start" @click="addComment">Submit</button>
         </div>
       </div>
     </form>
