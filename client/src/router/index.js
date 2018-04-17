@@ -38,6 +38,12 @@ export default new Router({
       name: 'Search',
       component: Home,
       props: true
+    },
+    {
+      path: '/user=:username',
+      name: 'User',
+      component: Home,
+      props: true
     }
   ]
 })

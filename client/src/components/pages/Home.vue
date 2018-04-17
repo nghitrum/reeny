@@ -10,15 +10,26 @@
         </div>
       </div>
     </div>
+    <div v-show="username">
+      <h3 class="search-for pl-5 p-3" v-if="posts.length == 0">No posts by {{username}}.</h3>
+      <h3 class="search-for pl-5 p-3" v-else>Posts by {{username}}&#58;</h3>
+    </div>
     <vue-post-list :postList="posts"></vue-post-list>
   </div>
-
 </template>
 
 <script>
 import PostList from '@/components/post/PostList'
 import gql from 'graphql-tag'
 
+// const queryUsername = gql`
+// query queryUsername($userId: ID!) {
+//   user(id: $userId) {
+//     id
+//     username
+//   }
+// }
+// `
 const queryAllPosts = gql`
 query allPosts {
     posts {
@@ -64,28 +75,56 @@ query searchQuery($searchInput: String) {
   }
 }
 `
+const queryUserPosts = gql`
+query userPosts($userSearch: String) {
+  postsByUsername(username: $userSearch){
+    id
+    title
+    images
+    upVote
+    downVote
+    createdAt
+    updatedAt
+    rating
+    user {
+      id
+      username
+    }
+    tags {
+      id
+      name
+    }
+  }
+}
+`
 
 export default {
-  props: ['search'],
+  props: ['search', 'username'],
   data () {
     return {
       posts: [],
-      query: ''
+      query: '',
+      user: ''
     }
   },
   apollo: {
     posts: {
       query () {
+        console.log(this.username)
         if (this.search) {
           return querySearch
+        } else if (this.username) {
+          console.log('in')
+          return queryUserPosts
         } else {
           return queryAllPosts
         }
       },
-      update: data => data.searchPosts || data.posts,
+      update: data => data.searchPosts || data.postsByUsername || data.posts,
       variables () {
         return {
-          searchInput: this.search
+          searchInput: this.search,
+          userSearch: this.username
         }
       }
     }
