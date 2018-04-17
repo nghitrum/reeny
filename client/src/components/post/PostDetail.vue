@@ -1,12 +1,12 @@
 <template>
-  <div v-if="post" class="container">
-    <div class="row col-md">
+  <div v-if="post">
+    <div class="row justify-content-between col-md rounded border py-3 my-2 ml-1">
       <div class="col-1">
         <div class="mx-auto-m">
           <vue-post-voting :id="post.id" :inputUpVote="post.upVote" :inputDownVote="post.downVote"></vue-post-voting>
         </div>
       </div>
-      <div class="col row-md-5">
+      <div class="col-8 row-md-8">
         <div class="col row-md">
           <h1>{{post.title}}</h1>
         </div>
@@ -14,7 +14,7 @@
           <router-link :to="{ name: 'User', params: { user: post.user.id }}">{{post.user.username}}</router-link>
         </div>
       </div>
-      <div class="col row-md-6">
+      <div class="col-3 row-md-3 text-right">
         <div class="col row-md">
           <div class="stars">
             <div class="full-stars">
@@ -34,9 +34,7 @@
     </div>
     <div class="row d-flex justify-content-center">
       <div class="carousel col-12 col-md-10">
-
         <b-carousel id="carousel" class="text-center" controls indicators :interval="4000" v-model="slide" @sliding-start="onSlideStart" @sliding-end="onSlideEnd">
-
           <div v-for="image in post.images" :key="image">
             <b-carousel-slide>
               <img slot="img" :src=image>
@@ -51,18 +49,16 @@
             <span class="sr-only">Next</span>
           </a>
         </b-carousel>
-
       </div>
     </div>
-    <div class="row container">
-      <p>{{post.content}}
-        <p/>
-    </div>
-    <div class="row container">
-      <span v-for="tag in post.tags.slice(0, 5)" :key="tag.id">
-        <p class="post-tag ">{{tag.name}}</p>
-      </span>
-
+    <div class="border rounded my-3 px-4 py-3">
+      <div class="row container">
+        <p>{{post.content}}
+          <p/>
+      </div>
+      <div class="row container">
+        <a href="#" class="badge badge-secondary badge-lg mr-1 mt-1" v-for="tag in post.tags" :key="tag.id">{{tag.name}}</a>
+      </div>
     </div>
     <div class="row mt-3">
     </div>

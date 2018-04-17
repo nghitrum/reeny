@@ -18,7 +18,7 @@
         </div>
       </div>
       <div class="column">
-        <img src="../../assets/logo4.png">
+        <img src="../../assets/icons/logo4.png">
       </div>
       <div class="column">
         <div class="contacts">
@@ -50,15 +50,15 @@ export default {
 
 <style scoped>
 h1 {
-  margin: 0 0 .9em 0;
+  margin: 0 0 0.9em 0;
 }
 
 p {
-  margin: 0 0 .9em 0;
+  margin: 0 0 0.9em 0;
 }
 
 .links p {
-  margin: 0 0 .5em 0;
+  margin: 0 0 0.5em 0;
 }
 
 .icons a {

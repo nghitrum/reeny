@@ -1,33 +1,31 @@
 <template>
   <div class="post-area" v-if="posts">
-    <div class="container-fluid" v-for="post in posts" :key="post.id">
-      <div class="row post border rounded">
-
-        <div class="col-2 col-lg-1">
-          <div class="mx-auto-m">
-            <vue-post-voting :id="post.id" :inputUpVote="post.upVote" :inputDownVote="post.downVote"></vue-post-voting>
-          </div>
+    <div class="row rounded border m-3 post" v-for="post in posts" :key="post.id">
+      <div class="col-1">
+        <div class="mx-auto-m">
+          <vue-post-voting :id="post.id" :inputUpVote="post.upVote" :inputDownVote="post.downVote"></vue-post-voting>
         </div>
-
-        <div class="col-10 col-lg-3 image-column">
-          <div class="image-container">
-            <img v-bind:src="post.images[0]">
-          </div>
+      </div>
+      <div class="d-none d-sm-flex col-11 col-sm-3 image-column">
+        <div class="image-container">
+          <img v-bind:src="post.images[0]">
         </div>
-
-        <div class="col-12 col-lg-8 title-column">
-
+      </div>
+      <div class="col-11 col-sm-8 title-column py-3">
+        <div class="title-and-stars">
           <div class="row">
             <div class="col-12 col-md-8">
-              <router-link :to="{ name: 'Post', params: { id: post.id }}">
-                <h3 class="post-title">{{post.title}}</h3>
-              </router-link>
+              <h3 class="post-title">
+                <router-link :to="{ name: 'Post', params: { id: post.id }}">{{post.title}}</router-link>
+              </h3>
               <p v-if="post.user">
-                By
-                <router-link :to="{ name: 'User', params: { username: post.user.username }}">{{post.user.username}}</router-link>
+                by
+                <router-link :to="{ name: 'User', params: { username: post.user.username }}">
+                  <a href="#">{{post.user.username}}</a>
+                </router-link>
               </p>
             </div>
-            <div class="col-12 col-md-4">
+            <div class="col-12 col-md-4 text-sm-left text-md-right mb-3">
               <div class="stars">
                 <div class="full-stars">
                   <span v-for="item in (post.rating)" :key="item.id" style="color: orange;">
@@ -42,27 +40,27 @@
               </div>
             </div>
           </div>
-
+        </div>
+        <div class="tags">
           <div class="row">
-            <div class="col-12 col-sm-6">
-              <span v-for="tag in post.tags.slice(0, 5)" :key="tag.id">
-                <a href="#">
-                  <p class="post-tag">{{tag.name}}</p>
-                </a>
-              </span>
-            </div>
-            <div class="col-12 col-sm-6 time">
-              <div v-if="post.updatedAt">
-                <p>Posted on {{post.createdAt.slice(0,25)}}</p>
-              </div>
-              <div v-else>
-                <p>Updated on {{post.updatedAt.slice(0,25)}}</p>
+            <div class="col-12">
+              <div class="row">
+                <div class="col">
+                  <a href="#" class="badge badge-secondary badge-lg mr-1 mt-1" v-for="tag in post.tags.slice(0, 5)" :key="tag.id">{{tag.name}}</a>
+                  <router-link :to="{ name: 'Post', params: { id: post.id }}" class="badge badge-dark badge-lg mr-1 mt-1" v-show="post.tags.length > 5">...</router-link>
+                </div>
               </div>
             </div>
           </div>
-
         </div>
-
+        <div class="timeline mt-3">
+          <div v-if="post.updatedAt" class="time">
+            posted on {{post.createdAt.slice(3,25)}}
+          </div>
+          <div v-else>
+            updated on {{post.updatedAt.slice(0,25)}}
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -89,15 +87,26 @@ export default {
 </script>
 
 <style scoped>
-a {
+.post:hover {
+  background: #f8f9fa;
+}
+.post-title a {
   text-decoration: none;
   color: black;
+  font-size: 1em;
+  font-weight: 300;
 }
-.image-container {
-  min-width: 10em;
+.post-title a:hover {
+  box-shadow: 0px 1px black;
+}
+.image-column {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 .image-container img {
   width: 100%;
+  height: 100%;
   max-width: 14em;
 }
 .post {
@@ -123,30 +132,34 @@ a {
   width: 50%;
   text-align: center;
 }
-.stars {
-  margin-top: 0.3em;
-}
 .fa-star {
-  font-size: 1.4em;
+  font-size: 1em;
 }
 .empty-stars,
 .full-stars {
   display: inline;
 }
 .empty-stars {
-  margin-left: -0.27em;
+  margin-left: -0.25em;
 }
-.post-title {
-  font-weight: 420;
+.title-column {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
 
-/* .time {
-  text-align: right;
-} */
-
-@media screen and (max-width: 600px) {
-  .image-column {
-    padding-bottom: 1em;
-  }
+.title-and-stars {
+  flex: 0 1 auto;
+}
+.tags {
+  flex: 1 1 auto;
+}
+.timeline {
+  flex: 0 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+.time {
+  align-self: flex-end;
 }
 </style>

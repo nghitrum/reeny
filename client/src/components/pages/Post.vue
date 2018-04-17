@@ -1,12 +1,8 @@
 <template>
   <div class="content">
-    <div class="row">
-      <div class="main-area">
-        <vue-post-detail :id="id"></vue-post-detail>
-        <vue-comment-form :id="id" v-on:addComment="getComment($event)"></vue-comment-form>
-        <vue-comment-list :id="id" :newComment="newComment"></vue-comment-list>
-      </div>
-    </div>
+    <vue-post-detail :id="id"></vue-post-detail>
+    <vue-comment-form :id="id" v-on:addComment="getComment($event)"></vue-comment-form>
+    <vue-comment-list :id="id" :newComment="newComment"></vue-comment-list>
   </div>
 </template>
 

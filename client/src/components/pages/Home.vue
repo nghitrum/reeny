@@ -1,8 +1,14 @@
 <template>
   <div>
     <div v-show="search">
-      <h3 class="search-for pl-5 p-3" v-if="posts.length == 0">No results for &#34;{{search}}&#34;.</h3>
-      <h3 class="search-for pl-5 p-3" v-else>Results for &#34;{{search}}&#34;&#58;</h3>
+      <div class="row">
+        <div class="col">
+          <div class="col mt-3">
+            <h3 class="search-for" v-if="posts.length == 0">No results for &#34;{{search}}&#34;.</h3>
+            <h3 class="search-for" v-else>Results for &#34;{{search}}&#34;&#58;</h3>
+          </div>
+        </div>
+      </div>
     </div>
     <div v-show="username">
       <h3 class="search-for pl-5 p-3" v-if="posts.length == 0">No posts by {{username}}.</h3>

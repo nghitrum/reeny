@@ -1,11 +1,11 @@
 <template>
   <div class="rating">
     <span class="clickable-icon" @click="upVote">
-      <i class="fas fa-long-arrow-alt-up"></i>
+      <i class="fas fa-sort-up"></i>
     </span>
     <h3>{{upVoteCount - downVoteCount}}</h3>
     <span class="clickable-icon" @click="downVote">
-      <i class="fas fa-long-arrow-alt-down"></i>
+      <i class="fas fa-sort-down"></i>
     </span>
   </div>
 </template>
@@ -111,10 +111,10 @@ export default {
 
 <style scoped>
 .rating {
-  width: 50%;
   text-align: center;
 }
 .clickable-icon {
   cursor: pointer;
+  font-size: 1em;
 }
 </style>

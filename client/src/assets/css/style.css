@@ -46,16 +46,15 @@ body {
 }
 /* flex sticky footer end */
 
-
 /* when screen is smaller put tags on top and remove sticky side area */
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 767.9px) {
   .inner-wrapper {
     flex-direction: column-reverse;
   }
 }
 
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 768px) {
   .sticky-side-area {
     position: -webkit-sticky;
     position: sticky;
@@ -63,4 +62,15 @@ body {
     align-self: flex-start;
     width: 30%;
   }
+}
+
+/* transition for link */
+a {
+  transition: 0.2s;
+}
+
+/* large badge */
+.badge-lg {
+  font-size: 100%;
+  font-weight: 600;
 }

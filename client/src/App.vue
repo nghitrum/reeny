@@ -4,7 +4,7 @@
     <div class="content">
       <div class="inner-wrapper">
         <div class="main-area">
-          <div class="container">
+          <div class="container-fluid">
             <router-view></router-view>
           </div>
         </div>

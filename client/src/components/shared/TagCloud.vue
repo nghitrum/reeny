@@ -5,8 +5,8 @@ span {
 </style>
 <template>
   <div>
-    <span v-for="tag in tags" :key="tag.id" v-bind:style="{fontSize: (((tag.count - tags[(tags.length > max ? max : tags.length - 1)].count)*(max - min) / (tags[0].count - tags[(tags.length > max ? max : tags.length - 1)].count )) + min) * 0.5 +'em'}">
-      <router-link :to="{ name: 'Search', params: { search: tag.name }}">{{tag.name}}</router-link>&nbsp;
+    <span v-for="(tag, index) in tags" :key="tag.id" v-bind:style="{fontSize: 3 - index * 0.1 * tag.count +'em'}">
+      <router-link :to="{ name: 'Tag'}">{{tag.name}}</router-link>&nbsp;
     </span>
   </div>
 </template>
