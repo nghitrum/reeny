@@ -11,8 +11,7 @@
           <h1>{{post.title}}</h1>
         </div>
         <div class="col">posted by
-          <!-- <router-link :to="{ name: 'User', params: { userId: post.user.id }}">{{post.user.username}}</router-link> -->
-          {{post.user.username}}
+          <router-link :to="{ name: 'User', params: { user: post.user.id }}">{{post.user.username}}</router-link>
         </div>
       </div>
       <div class="col row-md-6">

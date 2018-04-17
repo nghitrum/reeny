@@ -24,7 +24,7 @@
               </router-link>
               <p v-if="post.user">
                 By
-                <a href="#">{{post.user.username}}</a>
+                <router-link :to="{ name: 'User', params: { username: post.user.username }}">{{post.user.username}}</router-link>
               </p>
             </div>
             <div class="col-12 col-md-4">

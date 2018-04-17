@@ -104,6 +104,25 @@ const RootQuery = new GraphQLObjectType({
           }).sort({ createdAt: 'desc' })
         }
       }
+    },
+    postsByUserId: {
+      type: new GraphQLList(PostType),
+      args: {
+        user: { type: GraphQLID }
+      },
+      resolve(parentValue, { user }) {
+        return PostModel.find({ user }).sort({ createdAt: 'desc' })
+      }
+    },
+    postsByUsername: {
+      type: new GraphQLList(PostType),
+      args: {
+        username: { type: GraphQLString }
+      },
+      async resolve (parentValue, { username }) {
+        const user = await UserModel.findOne({ username })
+        return PostModel.find({ user: user.id }).sort({ createdAt: 'desc' })
+      }
     }
   })
 })
