@@ -6,7 +6,7 @@ span {
 <template>
   <div>
     <span v-for="(tag, index) in tags" :key="tag.id" v-bind:style="{fontSize: 3 - index * 0.1 * tag.count +'em'}">
-      <router-link :to="{ name: 'Tag'}">{{tag.name}}</router-link>&nbsp;
+      <router-link :to="{ name: 'Search', params: { search: tag.name }}">{{tag.name}}</router-link>&nbsp;
     </span>
   </div>
 </template>
