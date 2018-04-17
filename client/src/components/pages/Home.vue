@@ -22,14 +22,6 @@
 import PostList from '@/components/post/PostList'
 import gql from 'graphql-tag'
 
-// const queryUsername = gql`
-// query queryUsername($userId: ID!) {
-//   user(id: $userId) {
-//     id
-//     username
-//   }
-// }
-// `
 const queryAllPosts = gql`
 query allPosts {
     posts {
