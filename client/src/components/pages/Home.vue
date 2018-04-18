@@ -11,8 +11,14 @@
       </div>
     </div>
     <div v-show="username">
-      <h3 class="search-for pl-5 p-3" v-if="posts.length == 0">No posts by {{username}}.</h3>
-      <h3 class="search-for pl-5 p-3" v-else>Posts by {{username}}&#58;</h3>
+      <div class="row">
+        <div class="col">
+          <div class="col mt-3">
+            <h3 class="search-for" v-if="posts.length == 0">No posts by {{username}}.</h3>
+            <h3 class="search-for" v-else>Posts by {{username}}&#58;</h3>
+          </div>
+        </div>
+      </div>
     </div>
     <vue-post-list :postList="posts"></vue-post-list>
   </div>
@@ -102,11 +108,11 @@ export default {
   apollo: {
     posts: {
       query () {
-        console.log(this.username)
+        // console.log(this.username)
         if (this.search) {
           return querySearch
         } else if (this.username) {
-          console.log('in')
+          // console.log('in')
           return queryUserPosts
         } else {
           return queryAllPosts

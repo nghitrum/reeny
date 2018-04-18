@@ -30,7 +30,7 @@
             </div>
             <div class="row post-by-and-time">
               <div class="col-12 col-sm-6">posted by
-                <router-link :to="{ name: 'User', params: { user: post.user.id }}">{{post.user.username}}</router-link>
+                <router-link :to="{ name: 'User', params: { username: post.user.username }}">{{post.user.username}}</router-link>
               </div>
               <div class="col-12 col-sm-6 text-right">
                 <div v-if="post.updatedAt" class="time">
@@ -83,7 +83,6 @@
         </div>
       </div>
     </div>
-
   </div>
 </template>
 

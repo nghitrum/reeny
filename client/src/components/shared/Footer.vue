@@ -3,16 +3,16 @@
     <div class="footer-row">
       <div class="column links-column">
         <div class="links">
-          <a href="#">
+          <a href="/">
             <p>Home</p>
           </a>
-          <a href="#">
+          <a href="/about-us">
             <p>About Us</p>
           </a>
-          <a href="#">
+          <a href="/contact">
             <p>Contact Us</p>
           </a>
-          <a href="#">
+          <a href="/terms-of-service">
             <p>Terms of Service</p>
           </a>
         </div>

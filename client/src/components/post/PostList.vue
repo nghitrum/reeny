@@ -21,7 +21,7 @@
               <p v-if="post.user ">
                 by
                 <router-link :to="{ name: 'User', params: { username: post.user.username }} ">
-                  <a href="# ">{{post.user.username}}</a>
+                  {{post.user.username}}
                 </router-link>
               </p>
             </div>
@@ -41,13 +41,13 @@
             </div>
           </div>
         </div>
-        <div class="tags ">
-          <div class="row ">
-            <div class="col-12 ">
-              <div class="row ">
-                <div class="col ">
-                  <a href="# " class="badge badge-secondary badge-lg mr-1 mt-1 " v-for="tag in post.tags.slice(0, 5) " :key="tag.id ">{{tag.name}}</a>
-                  <router-link :to="{ name: 'Post', params: { id: post.id }} " class="badge badge-dark badge-lg mr-1 mt-1 " v-show="post.tags.length> 5">...</router-link>
+        <div class="tags">
+          <div class="row">
+            <div class="col-12">
+              <div class="row">
+                <div class="col">
+                  <router-link :to="{ name: 'Search', params: { search: tag.name }}" class="badge badge-secondary badge-lg mr-1 mt-1" v-for="tag in post.tags.slice(0, 5)" :key="tag.id">{{tag.name}}</router-link>
+                  <router-link :to="{ name: 'Post', params: { id: post.id }}" class="badge badge-dark badge-lg mr-1 mt-1" v-show="post.tags.length > 5">...</router-link>
                 </div>
               </div>
             </div>

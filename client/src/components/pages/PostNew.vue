@@ -1,5 +1,5 @@
 <template>
-  <div class="m-3 p-1 rounded">
+  <div class="m-3 p-3 border rounded">
     <!-- show errors -->
     <div class="alert alert-danger alert-dismissible fade show" role="alert" v-if="errors.length > 0">
       <ol>
@@ -13,7 +13,7 @@
     <form class="" novalidate>
       <div class="form-group">
         <label for="title">Title</label>
-        <input type="text" class="form-control form-control-lg" id="title" placeholder="Tell us your headline" v-model="title" required>
+        <input type="text" class="form-control form-control-lg" id="title" placeholder="Tell us your headline" v-model="title" required autofocus>
       </div>
       <div class="form-group">
         <label for="content">How was that?</label>
@@ -37,7 +37,7 @@
           <a href="">terms and conditions</a>.</label>
       </div>
       <div class="form-group"></div>
-      <button type="submit" class="btn btn-light border" @click="upload">Post Now</button>
+      <button type="submit" class="btn btn-dark btn-lg border mt-3" @click="upload">Post Now</button>
     </form>
 
   </div>
@@ -74,7 +74,6 @@ export default {
     getTags (tags) {
       this.oldTags = tags.old
       this.newTags = tags.new
-      console.log(tags)
     },
     getImages (images) {
       this.images = images
