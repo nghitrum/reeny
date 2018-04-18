@@ -28,7 +28,7 @@ export default {
   data () {
     return {
       tags: [],
-      max: 10,
+      max: 20,
       min: 1
     }
   },
