@@ -90,7 +90,7 @@ export default {
         this.errors.push('<strong>Title</strong> is required.')
       }
       // check content is empty
-      if (this.content.length === 0) {
+      if (this.content.trim().length === 0) {
         this.errors.push('<strong>Content</strong> is required.')
       }
       // check tags is empty
