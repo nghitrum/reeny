@@ -20,6 +20,11 @@
         </div>
       </div>
     </div>
+    <div class="text-center mt-3" v-if="$apollo.queries.posts.loading">
+      <p>Loading
+        <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
+      </p>
+    </div>
     <vue-post-list :postList="posts"></vue-post-list>
   </div>
 </template>

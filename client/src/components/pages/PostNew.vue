@@ -36,7 +36,15 @@
         <label class="form-check-label" for="term">I have read the
           <a href="/terms-of-service">terms and conditions</a>.</label>
       </div>
-      <button type="submit" class="btn btn-dark btn-lg border mt-5" @click="upload">Post Now</button>
+      <div class="form-group">
+        <div class="row">
+          <div class="col">
+            <button type="submit" class="btn btn-dark btn-lg border mt-5" @click="upload">Post Now
+              <i v-if="spin === true" class="fa fa-spinner fa-spin"></i>
+            </button>
+          </div>
+        </div>
+      </div>
     </form>
 
   </div>
@@ -61,7 +69,8 @@ export default {
       newTags: [],
       terms: '',
       user: JSON.parse(localStorage.getItem(USER_TOKEN)),
-      errors: []
+      errors: [],
+      spin: false
     }
   },
   components: {
@@ -104,6 +113,7 @@ export default {
 
       // form validated well
       if (!this.errors.length) {
+        this.spin = true
         // upload images to cloudinary
         let uploadedImages = []
         let axiosArr = []

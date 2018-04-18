@@ -76,7 +76,7 @@
             </div>
             <div class="row">
               <div class="col">
-                <a href="#" class="badge badge-secondary badge-lg mr-1 mt-1" v-for="tag in post.tags" :key="tag.id">{{tag.name}}</a>
+                <router-link :to="{ name: 'Search', params: { search: tag.name }}" class="badge badge-secondary badge-lg mr-1 mt-1" v-for="tag in post.tags" :key="tag.id">{{tag.name}}</router-link>
               </div>
             </div>
           </div>

@@ -72,12 +72,22 @@ export default {
       this.$apollo.queries.post.refetch()
     },
     upVote () {
-      this.getNewData()
       // console.log(this.upVotePressed)
-      if (this.upVotePressed === false) {
-        // console.log('inside upvote')
+      // console.log(this.user.id)
+
+      // check if this user is already upvoted
+      let count = this.post.upVotedBy.filter((ele) => {
+        return ele.id === this.user.id
+      }).length
+
+      // console.log(count)
+      if (count > 0) {
         this.upVotePressed = true
         this.downVotePressed = false
+      }
+
+      if (this.upVotePressed === false) {
+        // console.log('inside upvote')
 
         this.$apollo.mutate({
           mutation: upVoteMutation,
@@ -86,20 +96,35 @@ export default {
             user: this.user.id
           }
         }).then(res => {
+          // console.log('after upvote')
+          this.upVotePressed = true
+          this.downVotePressed = false
           this.upVoteCount = res.data.postUpVote.upVote
           this.downVoteCount = res.data.postUpVote.downVote
+          this.getNewData()
         }).catch(err => {
           console.log(err)
         })
       }
+
+      // console.log(this.upVotePressed)
     },
     downVote () {
-      this.getNewData()
       // console.log(this.downVotePressed)
+
+      // check if this user is already upvoted
+      let count = this.post.downVotedBy.filter((ele) => {
+        return ele.id === this.user.id
+      }).length
+      // console.log(count)
+
+      if (count > 0) {
+        this.downVotePressed = true
+        this.upVotePressed = false
+      }
+
       if (this.downVotePressed === false) {
         // console.log('inside downvote')
-        this.upVotePressed = false
-        this.downVotePressed = true
 
         this.$apollo.mutate({
           mutation: downVoteMutation,
@@ -108,8 +133,12 @@ export default {
             user: this.user.id
           }
         }).then(res => {
+          // console.log('after downvote')
+          this.upVotePressed = false
+          this.downVotePressed = true
           this.upVoteCount = res.data.postDownVote.upVote
           this.downVoteCount = res.data.postDownVote.downVote
+          this.getNewData()
         }).catch(err => {
           console.log(err)
         })

@@ -68,6 +68,7 @@
 
 <script>
 import PostVoting from './PostVoting'
+
 export default {
   data () {
     return {
