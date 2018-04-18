@@ -1,67 +1,89 @@
 <template>
-  <div v-if="post">
-    <div class="row justify-content-between col-md rounded border py-3 my-2 ml-1">
-      <div class="col-1">
-        <div class="mx-auto-m">
-          <vue-post-voting :id="post.id" :inputUpVote="post.upVote" :inputDownVote="post.downVote"></vue-post-voting>
-        </div>
-      </div>
-      <div class="col-8 row-md-8">
-        <div class="col row-md">
-          <h1>{{post.title}}</h1>
-        </div>
-        <div class="col">posted by
-          <router-link :to="{ name: 'User', params: { user: post.user.id }}">{{post.user.username}}</router-link>
-        </div>
-      </div>
-      <div class="col-3 row-md-3 text-right">
-        <div class="col row-md">
-          <div class="stars">
-            <div class="full-stars">
-              <span v-for="item in (post.rating)" :key="item.id" style="color: orange;">
-                <i class="fas fa-star"></i>
-              </span>
+  <div v-if="post" class="post-area">
+    <div class="row m-3">
+      <div class="col">
+        <div class="row rounded border">
+          <div class="col-1 border-right bg-light py-3">
+            <div class="mx-auto-m">
+              <vue-post-voting :id="post.id" :inputUpVote="post.upVote" :inputDownVote="post.downVote"></vue-post-voting>
             </div>
-            <div class="empty-stars">
-              <span v-for="item in (5 - post.rating)" :key="item.id" style="color: lightgray;">
-                <i class="fas fa-star"></i>
-              </span>
+          </div>
+          <div class="col-10 col-md-11 py-3">
+            <div class="row">
+              <div class="col-12 col-md-7">
+                <h1 class="post-title">{{post.title}}</h1>
+              </div>
+              <div class="col-12 col-md-5 text-md-right">
+                <div class="stars">
+                  <div class="full-stars">
+                    <span v-for="item in (post.rating)" :key="item.id" style="color: orange;">
+                      <i class="fas fa-star"></i>
+                    </span>
+                  </div>
+                  <div class="empty-stars">
+                    <span v-for="item in (5 - post.rating)" :key="item.id" style="color: lightgray;">
+                      <i class="fas fa-star"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row post-by-and-time">
+              <div class="col-12 col-sm-6">posted by
+                <router-link :to="{ name: 'User', params: { user: post.user.id }}">{{post.user.username}}</router-link>
+              </div>
+              <div class="col-12 col-sm-6 text-right">
+                <div v-if="post.updatedAt" class="time">
+                  posted on {{post.createdAt.slice(3,25)}}
+                </div>
+                <div v-else>
+                  updated on {{post.updatedAt.slice(0,25)}}
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <div class="col row-md">{{post.createdAt.slice(0,25)}} </div>
-      </div>
-    </div>
-    <div class="row d-flex justify-content-center">
-      <div class="carousel col-12 col-md-10">
-        <b-carousel id="carousel" class="text-center" controls indicators :interval="4000" v-model="slide" @sliding-start="onSlideStart" @sliding-end="onSlideEnd">
-          <div v-for="image in post.images" :key="image">
-            <b-carousel-slide>
-              <img slot="img" :src=image>
-            </b-carousel-slide>
+        <div class="row rounded border my-3 d-flex justify-content-center">
+          <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+              <li data-target="#carouselExampleIndicators" v-for="(image, index) in post.images" :key="index" :data-slide-to="index" v-bind:class="index == 0 ? 'active' : ''"></li>
+            </ol>
+            <div class="carousel-inner h-100">
+              <div class="h-100" v-for="(image, index) in post.images" :key="index" v-bind:class="index == 0 ? 'carousel-item active' : 'carousel-item'">
+                <div class="h-100 d-flex justify-content-center align-items-center">
+                  <img class="img-fluid" :src=image>
+                </div>
+              </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
           </div>
-          <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-          </a>
-          <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-          </a>
-        </b-carousel>
+        </div>
+        <div class="row rounded border my-3">
+          <div class="col py-3">
+            <div class="row">
+              <div class="col">
+                <p>
+                  {{post.content}}
+                </p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <a href="#" class="badge badge-secondary badge-lg mr-1 mt-1" v-for="tag in post.tags" :key="tag.id">{{tag.name}}</a>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="border rounded my-3 px-4 py-3">
-      <div class="row container">
-        <p>{{post.content}}
-          <p/>
-      </div>
-      <div class="row container">
-        <a href="#" class="badge badge-secondary badge-lg mr-1 mt-1" v-for="tag in post.tags" :key="tag.id">{{tag.name}}</a>
-      </div>
-    </div>
-    <div class="row mt-3">
-    </div>
+
   </div>
 </template>
 
@@ -133,55 +155,25 @@ export default {
 </script>
 
 <style scoped>
-@media only screen and (max-width: 400px) {
-  img {
-    height: 300px !important;
-    width: 200px !important;
-  }
+.post-by-and-time {
+  align-self: flex-end;
 }
-img {
-  height: 500px !important;
-  width: auto !important;
-}
-.carousel-control-next-icon {
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' stroke='%23777' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E") !important;
+
+#carouselExampleIndicators {
+  width: 100%;
+  height: 400px;
 }
 .carousel-control-prev-icon {
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' stroke='%23777' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E") !important;
-}
-#carousel {
-  width: 100%;
-  height: 500px;
+  background-size: 2em;
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E") !important;
 }
 
-*:focus {
-  outline: 0;
-  outline: none;
+.carousel-control-next-icon {
+  background-size: 2em;
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E") !important;
 }
-.post-tag {
-  display: inline-block;
-  border-radius: 13%;
-  padding: 0.2em;
-  margin-right: 0.8em;
-  border: 1px solid #e4e2e2;
-  background: #e9e8e8;
-}
-
-.stars {
-  margin-top: 0.6em;
-}
-.fa-star {
-  font-size: 1.4em;
-}
-.empty-stars,
-.full-stars {
-  display: inline;
-}
-.empty-stars {
-  margin-left: -0.27em;
-}
-.rating {
-  width: 50%;
-  text-align: center;
+img {
+  max-height: 400px !important;
+  width: auto !important;
 }
 </style>

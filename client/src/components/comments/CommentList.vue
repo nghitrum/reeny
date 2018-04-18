@@ -1,19 +1,24 @@
 <template>
-  <div class="col">
-    <div class="row border rounded mb-3" v-for="comment in comments" :key="comment.id">
-      <div class="col-1">
-        <vue-comment-voting :id="comment.id" :inputUpVote="comment.upVote" :inputDownVote="comment.downVote"></vue-comment-voting>
+  <div>
+    <div class="row border rounded m-3 comment" v-for="comment in comments" :key="comment.id">
+      <div class="col-1 border-right bg-light">
+        <div class="mx-auto-m">
+          <vue-comment-voting :id="comment.id" :inputUpVote="comment.upVote" :inputDownVote="comment.downVote"></vue-comment-voting>
+        </div>
       </div>
       <div class="col-11">
-        <div class="row align-items-start">
-          <div class="col">{{comment.content}}</div>
-        </div>
-        <div class="row justify-content-between mt-3">
-          <div class="col-6">
-            Posted by {{comment.user.username}}
+        <div class="row">
+          <div class="col">
+            <span>
+              <strong>{{comment.user.username}}</strong>
+            </span>
+            &#8212;
+            <span>{{comment.createdAt.slice(0,25)}}</span>
           </div>
-          <div class="col-6 text-right">
-            {{comment.createdAt.slice(0,25)}}
+        </div>
+        <div class="row">
+          <div class="col">
+            {{comment.content}}
           </div>
         </div>
       </div>

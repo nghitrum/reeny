@@ -5,7 +5,8 @@ const CommentSchema = new Schema({
   content: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
+    max: 500
   },
   createdAt: {
     type: Date,
