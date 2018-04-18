@@ -40,6 +40,9 @@ export default {
     }
   },
   methods: {
+    doNothing (event) {
+      event.preventDefault()
+    },
     filterTags (event) {
       if (event.target.value === '') {
         this.isPressed = false

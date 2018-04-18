@@ -73,46 +73,46 @@ export default {
     },
     upVote () {
       this.getNewData()
-      console.log('gay')
-      if (!this.upVotePressed) {
-        if (this.post.upVotedBy.filter(user => user.id === this.user.id).length === 0 || this.downVotePressed) {
-          this.$apollo.mutate({
-            mutation: upVoteMutation,
-            variables: {
-              id: this.postId,
-              user: this.user.id
-            }
-          }).then(res => {
-            console.log(res.data)
-            this.upVotePressed = true
-            this.downVotePressed = false
-            this.upVoteCount = res.data.postUpVote.upVote
-            this.downVoteCount = res.data.postUpVote.downVote
-          }).catch(err => {
-            console.log(err)
-          })
-        }
+      // console.log(this.upVotePressed)
+      if (this.upVotePressed === false) {
+        // console.log('inside upvote')
+        this.upVotePressed = true
+        this.downVotePressed = false
+
+        this.$apollo.mutate({
+          mutation: upVoteMutation,
+          variables: {
+            id: this.postId,
+            user: this.user.id
+          }
+        }).then(res => {
+          this.upVoteCount = res.data.postUpVote.upVote
+          this.downVoteCount = res.data.postUpVote.downVote
+        }).catch(err => {
+          console.log(err)
+        })
       }
     },
     downVote () {
       this.getNewData()
-      if (!this.downVotePressed) {
-        if (this.post.downVotedBy.filter(user => user.id === this.user.id).length === 0 || this.upVotePressed) {
-          this.$apollo.mutate({
-            mutation: downVoteMutation,
-            variables: {
-              id: this.postId,
-              user: this.user.id
-            }
-          }).then(res => {
-            this.upVotePressed = false
-            this.downVotePressed = true
-            this.upVoteCount = res.data.postDownVote.upVote
-            this.downVoteCount = res.data.postDownVote.downVote
-          }).catch(err => {
-            console.log(err)
-          })
-        }
+      // console.log(this.downVotePressed)
+      if (this.downVotePressed === false) {
+        // console.log('inside downvote')
+        this.upVotePressed = false
+        this.downVotePressed = true
+
+        this.$apollo.mutate({
+          mutation: downVoteMutation,
+          variables: {
+            id: this.postId,
+            user: this.user.id
+          }
+        }).then(res => {
+          this.upVoteCount = res.data.postDownVote.upVote
+          this.downVoteCount = res.data.postDownVote.downVote
+        }).catch(err => {
+          console.log(err)
+        })
       }
     }
   }
