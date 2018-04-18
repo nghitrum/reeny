@@ -13,7 +13,7 @@
     <form class="" novalidate>
       <div class="form-group">
         <label for="title">Title</label>
-        <input type="text" class="form-control form-control-lg" id="title" placeholder="Tell us your headline" v-model="title" required autofocus>
+        <input v-on:keydown.enter.prevent='doNothing' type="text" class="form-control form-control-lg" id="title" placeholder="Tell us your headline" v-model="title" required autofocus>
       </div>
       <div class="form-group">
         <label for="content">How was that?</label>
@@ -34,10 +34,9 @@
       <div class="form-check">
         <input type="checkbox" class="form-check-input" id="term" v-model="terms">
         <label class="form-check-label" for="term">I have read the
-          <a href="">terms and conditions</a>.</label>
+          <a href="/terms-of-service">terms and conditions</a>.</label>
       </div>
-      <div class="form-group"></div>
-      <button type="submit" class="btn btn-dark btn-lg border mt-3" @click="upload">Post Now</button>
+      <button type="submit" class="btn btn-dark btn-lg border mt-5" @click="upload">Post Now</button>
     </form>
 
   </div>
@@ -71,6 +70,9 @@ export default {
     'vue-rating': Rating
   },
   methods: {
+    doNothing (event) {
+      event.preventDefault()
+    },
     getTags (tags) {
       this.oldTags = tags.old
       this.newTags = tags.new

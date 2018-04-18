@@ -8,7 +8,7 @@
       <div class="input-group-prepend">
         <span class="input-group-text" id="basic-addon1">#</span>
       </div>
-      <input type="text" class="form-control" v-model="search" @keyup="filterTags">
+      <input v-on:keydown.enter.prevent='doNothing' type="text" class="form-control" v-model="search" @keyup="filterTags">
     </div>
     <ul class="list-group list-group-flush" v-if="isPressed">
       <li class="list-group-item list-group-item-action" v-for="tag in current" :key="tag.id" @click="clickTag">{{tag.name}}</li>
