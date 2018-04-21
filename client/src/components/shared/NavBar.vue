@@ -26,6 +26,7 @@
                       </a>
                       <div class="dropdown-menu dropdown-menu-right">
                         <button class="dropdown-item" type="button" @click="logout">Logout</button>
+                        <router-link :to="{ name: 'User', params: { username: this.user.username }}" class="dropdown-item" tag="button">My Posts</router-link>
                       </div>
                     </div>
                   </div>
