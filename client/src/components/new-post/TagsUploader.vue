@@ -28,6 +28,7 @@ const queryTags = gql`
   }
 `
 export default {
+  props: ['inputTags'],
   data () {
     return {
       allTags: [],
@@ -37,6 +38,16 @@ export default {
       search: '',
       addedTags: [],
       newTags: []
+    }
+  },
+  watch: {
+    inputTags () {
+      if (this.inputTags.length > 0) {
+        this.inputTags.forEach(element => {
+          this.addedTags.push(element)
+        })
+      }
+      this.$emit('addTags', { 'old': this.addedTags, 'new': this.newTags })
     }
   },
   methods: {
@@ -85,7 +96,7 @@ export default {
           this.newTags.push(tag)
         }
       } else {
-        if (this.addedTags.indexOf(tag) === -1) {
+        if (this.addedTags.findIndex(element => element.id === tag.id) === -1) {
           this.addedTags.push(tag)
         }
       }

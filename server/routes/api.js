@@ -49,4 +49,11 @@ router.post('/upload/image', upload.single('myFile'), function(req, res) {
   )
 })
 
+router.delete('/delete/image/reeny/:public_id', function(req, res) {
+  const id = 'reeny/' + req.params.public_id
+  cloudinary.v2.uploader.destroy(id, function(error, result) {
+    console.log(result)
+  })
+})
+
 module.exports = router

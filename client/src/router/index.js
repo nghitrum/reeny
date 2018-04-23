@@ -37,6 +37,12 @@ export default new Router({
       component: PostNew
     },
     {
+      path: '/post/update/:id',
+      name: 'Update Post',
+      component: PostNew,
+      props: true
+    },
+    {
       path: '/search=:search',
       name: 'Search',
       component: Home,
