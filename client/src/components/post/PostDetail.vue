@@ -33,8 +33,8 @@
                 <router-link :to="{ name: 'User', params: { username: post.user.username }}">{{post.user.username}}</router-link>
               </div>
               <div class="col-12 col-sm-6 text-right">
-                <div v-if="post.updatedAt" class="time">
-                  posted on {{post.createdAt.slice(3,25)}}
+                <div v-if="new Date(post.updatedAt) <= new Date(post.createdAt)" class="time">
+                  posted on {{post.createdAt.slice(0,25)}}
                 </div>
                 <div v-else>
                   updated on {{post.updatedAt.slice(0,25)}}
@@ -81,6 +81,10 @@
             </div>
           </div>
         </div>
+        <div class="row rounded mt-3 float-right" v-show="user.id === post.user.id">
+          <a href="" class="btn btn-outline-danger mx-3">Delete</a>
+          <router-link :to="{ name: 'Update Post', params: { id: this.postId }}" class="btn btn-outline-info">Edit</router-link>
+        </div>
       </div>
     </div>
   </div>
@@ -91,6 +95,7 @@ import bCarousel from 'bootstrap-vue/es/components/carousel/carousel'
 import bCarouselSlide from 'bootstrap-vue/es/components/carousel/carousel-slide'
 import gql from 'graphql-tag'
 import PostVoting from './PostVoting'
+import { USER_TOKEN } from '@/constants/setting'
 
 const queryPost = gql`
 query getPost($input: ID!) {
@@ -126,6 +131,7 @@ export default {
   },
   data () {
     return {
+      user: JSON.parse(localStorage.getItem(USER_TOKEN)),
       postId: this.id,
       post: '',
       slide: 0,

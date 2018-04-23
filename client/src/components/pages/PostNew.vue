@@ -21,17 +21,17 @@
       </div>
       <div class="form-group">
         <label for="rating">Rate it</label>
-        <vue-rating v-on:addRating="getRating($event)"></vue-rating>
+        <vue-rating v-on:addRating="getRating($event)" :inputRating="rating"></vue-rating>
       </div>
       <div class="form-group">
         <label for="photos">Any pictures?</label>
-        <vue-images-uploader v-on:addImages="getImages($event)"></vue-images-uploader>
+        <vue-images-uploader v-on:addImages="getImages($event)" :inputImages="oldImages"></vue-images-uploader>
       </div>
       <div class="form-group">
         <label for="tags">Any tags?</label>
-        <vue-tags-uploader v-on:addTags="getTags($event)"></vue-tags-uploader>
+        <vue-tags-uploader v-on:addTags="getTags($event)" :inputTags="tags"></vue-tags-uploader>
       </div>
-      <div class="form-check">
+      <div class="form-check" v-show="!id">
         <input type="checkbox" class="form-check-input" id="term" v-model="terms">
         <label class="form-check-label" for="term">I have read the
           <a href="/terms-of-service">terms and conditions</a>.</label>
@@ -39,7 +39,10 @@
       <div class="form-group">
         <div class="row">
           <div class="col">
-            <button type="submit" class="btn btn-dark btn-lg border mt-5" @click="upload">Post Now
+            <button type="submit" class="btn btn-dark btn-lg border mt-5" @click="upload" v-if="!id">Post Now
+              <i v-if="spin === true" class="fa fa-spinner fa-spin"></i>
+            </button>
+            <button type="submit" class="btn btn-dark btn-lg border mt-5" @click="upload" v-else>Update Now
               <i v-if="spin === true" class="fa fa-spinner fa-spin"></i>
             </button>
           </div>
@@ -58,25 +61,81 @@ import { USER_TOKEN } from '@/constants/setting'
 import gql from 'graphql-tag'
 import axios from 'axios'
 
+const queryPost = gql`
+query getPost($input: ID!) {
+  post(id: $input) {
+    id
+    title
+    content
+    tags {
+      id
+      name
+      count
+    }
+    user {
+      id
+      username
+    }
+    rating
+    images
+    upVote
+    downVote
+    createdAt
+    updatedAt
+  }
+}
+`
+
 export default {
+  props: ['id'],
   data () {
     return {
       title: '',
       content: '',
       rating: 0,
-      images: [],
+      newImages: [],
+      oldImages: [],
       oldTags: [],
       newTags: [],
       terms: '',
       user: JSON.parse(localStorage.getItem(USER_TOKEN)),
       errors: [],
-      spin: false
+      spin: false,
+      post: '',
+      tags: ''
     }
   },
   components: {
     'vue-images-uploader': ImagesUploader,
     'vue-tags-uploader': TagsUploader,
     'vue-rating': Rating
+  },
+  mounted () {
+    if (this.id) {
+      this.$apollo.queries.post.skip = false
+    }
+  },
+  apollo: {
+    post: {
+      query: queryPost,
+      variables () {
+        return {
+          input: this.id
+        }
+      },
+      skip () {
+        return this.id
+      }
+    }
+  },
+  watch: {
+    post () {
+      this.title = this.post.title
+      this.content = this.post.content
+      this.rating = this.post.rating
+      this.tags = this.post.tags
+      this.oldImages = this.post.images
+    }
   },
   methods: {
     doNothing (event) {
@@ -87,7 +146,8 @@ export default {
       this.newTags = tags.new
     },
     getImages (images) {
-      this.images = images
+      this.oldImages = images.old
+      this.newImages = images.new
     },
     getRating (rating) {
       this.rating = rating
@@ -107,6 +167,10 @@ export default {
         this.errors.push('<strong>Tags</strong> are required.')
       }
       // check terms and condition is checked
+      if (this.id) {
+        this.terms = true
+      }
+
       if (!this.terms) {
         this.errors.push('<strong>Terms and condition</strong> is required.')
       }
@@ -117,7 +181,7 @@ export default {
         // upload images to cloudinary
         let uploadedImages = []
         let axiosArr = []
-        this.images.forEach(image => {
+        this.newImages.forEach(image => {
           const formData = new FormData()
           formData.append('myFile', image, image.name)
           axiosArr.push(axios.post('http://localhost:4000/api/upload/image',
@@ -125,6 +189,9 @@ export default {
           ))
         })
         axios.all(axiosArr).then(res => {
+          this.oldImages.forEach(element => {
+            uploadedImages.push(element)
+          })
           // finishing upload images
           res.forEach(element => {
             uploadedImages.push(element.data.result.url)
@@ -160,29 +227,57 @@ export default {
             })
             // done new tags uploaded
 
-            // now post new
-            const uploadPostMutation = gql`
-            mutation uploadPost($inputTitle: String, $inputContent: String, $inputTags: [ID], $inputRating: Int, $inputImages: [String], $inputUser: ID ) {
-              addPost(title: $inputTitle, content: $inputContent, tags: $inputTags, rating: $inputRating, images: $inputImages, user: $inputUser) {
-                id
+            if (this.id) {
+              const updatePostMutation = gql`
+              mutation updatePost($inputId: ID, $inputTitle: String, $inputContent: String, $inputTags: [ID], $inputRating: Int, $inputImages: [String], $inputUser: ID ) {
+                updatePost(id: $inputId, title: $inputTitle, content: $inputContent, tags: $inputTags, rating: $inputRating, images: $inputImages, user: $inputUser) {
+                  id
+                }
               }
+              `
+              this.$apollo.mutate({
+                mutation: updatePostMutation,
+                variables: {
+                  inputId: this.id,
+                  inputTitle: this.title,
+                  inputContent: this.content,
+                  inputRating: this.rating,
+                  inputImages: uploadedImages,
+                  inputTags: uploadedTags,
+                  inputUser: this.user.id
+                }
+              }).then(res => {
+                console.log(res)
+                this.$router.go()
+                this.$router.push('/post/' + res.data.updatePost.id)
+              }).catch(err => {
+                console.log(err)
+              })
+            } else {
+              // now post new
+              const uploadPostMutation = gql`
+              mutation uploadPost($inputTitle: String, $inputContent: String, $inputTags: [ID], $inputRating: Int, $inputImages: [String], $inputUser: ID ) {
+                addPost(title: $inputTitle, content: $inputContent, tags: $inputTags, rating: $inputRating, images: $inputImages, user: $inputUser) {
+                  id
+                }
+              }
+              `
+              this.$apollo.mutate({
+                mutation: uploadPostMutation,
+                variables: {
+                  inputTitle: this.title,
+                  inputContent: this.content,
+                  inputRating: this.rating,
+                  inputImages: uploadedImages,
+                  inputTags: uploadedTags,
+                  inputUser: this.user.id
+                }
+              }).then(res => {
+                this.$router.replace('/post/' + res.data.addPost.id)
+              }).catch(err => {
+                console.log(err)
+              })
             }
-            `
-            this.$apollo.mutate({
-              mutation: uploadPostMutation,
-              variables: {
-                inputTitle: this.title,
-                inputContent: this.content,
-                inputRating: this.rating,
-                inputImages: uploadedImages,
-                inputTags: uploadedTags,
-                inputUser: this.user.id
-              }
-            }).then(res => {
-              this.$router.replace('/post/' + res.data.addPost.id)
-            }).catch(err => {
-              console.log(err)
-            })
           })
         })
       }

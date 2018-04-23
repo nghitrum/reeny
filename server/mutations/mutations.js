@@ -85,6 +85,47 @@ const mutation = new GraphQLObjectType({
         return new PostModel(args).save()
       }
     },
+    updatePost: {
+      type: PostType,
+      args: {
+        id: {
+          type: GraphQLID
+        },
+        title: {
+          type: GraphQLString
+        },
+        content: {
+          type: GraphQLString
+        },
+        tags: {
+          type: new GraphQLList(GraphQLID)
+        },
+        rating: {
+          type: GraphQLInt
+        },
+        images: { type: new GraphQLList(GraphQLString) },
+        user: {
+          type: GraphQLID
+        }
+      },
+      async resolve(parentValue, args) {
+        const post = await PostModel.findByIdAndUpdate(
+          args.id,
+          {
+            $set: {
+              title: args.title,
+              content: args.content,
+              tags: args.tags,
+              images: args.images,
+              rating: args.rating,
+              updatedAt: Date.now()
+            }
+          },
+          { new: true }
+        )
+        return post
+      }
+    },
     postUpVote: {
       type: PostType,
       args: {

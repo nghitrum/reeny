@@ -15,9 +15,15 @@
 
 <script>
 export default {
+  props: ['inputRating'],
   methods: {
     isCheck (event) {
       this.$emit('addRating', event.target.value)
+    }
+  },
+  watch: {
+    inputRating () {
+      document.getElementById('star' + this.inputRating).checked = true
     }
   }
 }
