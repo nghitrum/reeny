@@ -1,11 +1,11 @@
 # reeny
 
-This project is aimed to finish the Software Development 2 course.
+This is the project we did for the Software Development 2 course.
 
 ## Stack
 
 1. [Vue.js](https://vuejs.org/)
-2. [Semantic UI](https://semantic-ui.com/)
+2. [Bootstrap 4](https://getbootstrap.com/)
 3. [GraphQL](http://graphql.org/)
 4. [Express.js](https://expressjs.com/)
 5. [Node.js](https://nodejs.org/en/)
@@ -25,12 +25,12 @@ npm run dev
 
 ## How to use GitHub
 
-Here's the flow when you work with GitHuB
+Here's how to work with GitHub.
 
 ### Pull the newest version of master branch
 
 First you need to checkout the master and get the newest version of the source code by `git checkout master` and `git pull`.
-If you haven't done anything, you can use `git clone https://github.com/nghitrum/reeny.git` to clone the master branch.
+If you're just starting out, you can use `git clone https://github.com/nghitrum/reeny.git` to clone the master branch.
 
 ### Create a new branch for your local
 
@@ -70,7 +70,7 @@ Use `git checkout master`.
 
 Use `git pull master`.
 
-### Then repeat the procedure
+### Rinse and repeat
 
 ## Contributors
 
